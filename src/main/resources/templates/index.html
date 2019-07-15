@@ -24,7 +24,7 @@
 <div class="container unauthenticated">
     With Facebook: <a href="/login">click here</a>
 </div>
-<script>
+<script type="text/javascript">
     $.ajaxSetup({
 beforeSend : function(xhr, settings) {
   if (settings.type == 'POST' || settings.type == 'PUT'
@@ -39,15 +39,20 @@ beforeSend : function(xhr, settings) {
 }
 });
 </script>
+<script type="text/javascript">
+    var logout = function() {
+    $.post("/logout", function() {
+        $("#user").html('');
+        $(".unauthenticated").show();
+        $(".authenticated").hide();
+    })
+    return true;
+}
+</script>
 <div class="container authenticated" style="display:none">
     Logged in as: <span id="user"></span>
     <div>
-        <input type="button" value="Logout" onClick="logout=function(){$.post(&quot;/logout&quot;, function() {
-        $(&quot;#user\&quot;).html('');
-        $(&quot;.unauthenticated&quot;).show();
-        $(&quot;.authenticated&quot;).hide();})
-        return true;
-        }}" class="btn btn-primary"/>
+        <input type="button" value="Logout" onclick="logout()" class="btn btn-primary"/>
     </div>
 </div>
 </body>

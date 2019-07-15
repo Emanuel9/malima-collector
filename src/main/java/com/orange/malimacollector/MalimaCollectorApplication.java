@@ -21,13 +21,12 @@ public class MalimaCollectorApplication extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
-		http
-				.antMatcher("/**")
+		http.antMatcher("/**")
 				.authorizeRequests()
-				.antMatchers("/","/login**","/webjars/**","/error")
+				.antMatchers("/","/login**","/webjars/**","/error**")
 				.permitAll()
 				.anyRequest()
-				.authenticated();
+				.authenticated().and().logout().logoutSuccessUrl("/").permitAll();
 	}
 
 	public static void main(String[] args) {

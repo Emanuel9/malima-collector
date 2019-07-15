@@ -1,8 +1,9 @@
 security:
+  require-ssl: true
   oauth2:
     client:
-      clientId: 233668646673605
-      clientSecret: 33b17e044ee6a4fa383f46ec6e28ea1d
+      clientId: 2274981545955176
+      clientSecret: 0e9bb606c35cd30156d6314c614b4333
       accessTokenUri: https://graph.facebook.com/oauth/access_token
       userAuthorizationUri: https://www.facebook.com/dialog/oauth
       tokenName: oauth_token
@@ -14,3 +15,11 @@ security:
 spring:
   main:
     allow-bean-definition-overriding: true
+
+server:
+  port: 443
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore/newkey.p12
+    key-store-password: testing
+    key-alias: key

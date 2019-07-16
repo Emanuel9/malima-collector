@@ -5,13 +5,19 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Objects;
 
 public class GitlabCollector {
     private URL url; //add the url in terms of the parameters requested
+    private String parameters;
+
+    public GitlabCollector(String parameters) {
+        this.parameters = parameters;
+    }
 
     {
         try {
-            url = new URL("http://gitlab.com/api/v4/"); // + parameters(String)
+            url = new URL("http://gitlab.com/api/v4/" + parameters);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -21,7 +27,7 @@ public class GitlabCollector {
 
     {
         try {
-            urlConnection = url.openConnection();
+            urlConnection = Objects.requireNonNull(url).openConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,4 +43,9 @@ public class GitlabCollector {
         }
     }
 
+    //parse inputStream and post appropriate content on the website
+
+    public InputStream getInputStream() {
+        return inputStream;
+    }
 }

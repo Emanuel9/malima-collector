@@ -1,4 +1,4 @@
-package com.orange.malimacollector.service;
+package com.orange.malimacollector.service.Gitlab;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -37,11 +37,11 @@ public class InputParser {
         return writer;
     }
 
-    public static Group fromJsonString(String json) throws IOException {
+    public static Group groupFromJsonString(String json) throws IOException {
         return getGroupObjectReader().readValue(json);
     }
 
-    public static String toJsonString(Group obj) throws JsonProcessingException {
+    public static String groupToJsonString(Group obj) throws JsonProcessingException {
         return getGroupObjectWriter().writeValueAsString(obj);
     }
 
@@ -59,6 +59,25 @@ public class InputParser {
     private static ObjectWriter getGroupObjectWriter() {
         if (writer == null) instantiateGroupMapper();
         return writer;
+    }
+
+    private GitlabCollector gitlabCollector = new GitlabCollector();
+
+    public void handler(){
+        String content = gitlabCollector.getContent();
+        if (true){ //check string beforehand, change condition
+            try {
+                Project[] project = projectFromJsonString(content);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                Group group = groupFromJsonString(content);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 

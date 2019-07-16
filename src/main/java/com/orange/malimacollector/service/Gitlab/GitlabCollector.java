@@ -9,24 +9,29 @@ import java.nio.charset.Charset;
 public class GitlabCollector {
     private GitLabParameters parameters;
 
-    public GitlabCollector(GitLabParameters parameters) {
+    public GitLabParameters getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(GitLabParameters parameters) {
         this.parameters = parameters;
     }
 
-    public String buildURL(String accessToken, String userID){
+    public String buildURL(String accessToken, String ID){
         String newURL = "https://gitlab.com/api/v4/";
         String modifier;
         if (parameters.isGroup()){
             modifier = "groups/";
         } else if (parameters.isProjects()){
-            modifier = "projects/";
+            modifier = "users/";
         } else {
             modifier = "";
         }
         newURL += modifier;
         if (parameters.hasID()) {
-            newURL = newURL + userID + "/";
+            newURL = newURL + ID + "/";
         }
+        newURL += ("projects" + "?access_token=" + accessToken);
         return newURL;
     }
 
@@ -57,6 +62,12 @@ public class GitlabCollector {
         }
 
         return sb.toString();
+    }
+
+    private String content = callURL(buildURL("jLQauiy3yux8ZTBx_h6F","4278148")); //remove hardcoding
+
+    public String getContent() {
+        return content;
     }
 }
 

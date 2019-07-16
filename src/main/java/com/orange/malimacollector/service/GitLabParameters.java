@@ -11,5 +11,14 @@ public class GitLabParameters {
         this.standalone = standalone;
     }
 
+    public void createURL(){
+        String URL = "";
+        if (projects){
 
+        } else if (group){
+
+        } else {
+
+        }
+    }
 }

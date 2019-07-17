@@ -70,16 +70,14 @@ public class InputParser {
         String content = gitlabCollector.callURL(URL);
         if (URL.substring(27,27).equals("p") || URL.substring(27,27).equals("u")){
             try {
-                Project[] project = projectFromJsonString(content);
-                return project;
+                return projectFromJsonString(content);
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
             }
         } else {
             try {
-                Group group = groupFromJsonString(content);
-                return group;
+                return groupFromJsonString(content);
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
@@ -88,8 +86,8 @@ public class InputParser {
     }
 
     @RequestMapping("/content")
-    public Object translatedContent(Object object){
-        return object;
+    public Object translatedContent(){
+        return handler();
     }
 }
 

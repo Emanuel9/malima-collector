@@ -31,18 +31,18 @@
 </div>
 <script type="text/javascript">
     $.ajaxSetup({
-beforeSend : function(xhr, settings) {
-  if (settings.type == 'POST' || settings.type == 'PUT'
-      || settings.type == 'DELETE') {
-    if (!(/^http:.*/.test(settings.url) || /^https:.*/
-        .test(settings.url))) {
-      // Only send the token to relative URLs i.e. locally.
-      xhr.setRequestHeader("X-XSRF-TOKEN",
-          Cookies.get('XSRF-TOKEN'));
-    }
-  }
-}
-});
+        beforeSend : function(xhr, settings) {
+            if (settings.type == 'POST' || settings.type == 'PUT'
+                || settings.type == 'DELETE') {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/
+                    .test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-XSRF-TOKEN",
+                        Cookies.get('XSRF-TOKEN'));
+                }
+            }
+        }
+    });
 </script>
 <script type="text/javascript">
     var logout = function() {
@@ -61,8 +61,8 @@ beforeSend : function(xhr, settings) {
     </div>
 </div>
 <script type="text/javascript">
-    $.get("/content", function(handler){
-        $("#handler").html(project.name);
+    $.get("/content", function(data){
+        $("#handler").html(data.name);
     });
 </script>
 <div class="container authenticated" style="display:none">

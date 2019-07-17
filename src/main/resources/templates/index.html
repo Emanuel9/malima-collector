@@ -22,7 +22,12 @@
     });
 </script>
 <div class="container unauthenticated">
-    With Facebook: <a href="/login">click here</a>
+    <div>
+        With Facebook: <a href="/login/facebook">click here</a>
+    </div>
+    <div>
+        With Github: <a href="/login/github">click here</a>
+    </div>
 </div>
 <script type="text/javascript">
     $.ajaxSetup({
@@ -57,7 +62,7 @@ beforeSend : function(xhr, settings) {
 </div>
 <script type="text/javascript">
     $.get("/content", function(handler){
-        $("#project").html(project.name);
+        $("#handler").html(project.name);
     });
 </script>
 <div class="container authenticated" style="display:none">

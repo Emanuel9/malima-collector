@@ -55,5 +55,13 @@ beforeSend : function(xhr, settings) {
         <input type="button" value="Logout" onclick="logout()" class="btn btn-primary"/>
     </div>
 </div>
+<script type="text/javascript">
+    $.get("/content", function(handler){
+        $("#project").html(project.name);
+    });
+</script>
+<div class="container authenticated" style="display:none">
+    Project name is: <span id="handler"></span>
+</div>
 </body>
 </html>

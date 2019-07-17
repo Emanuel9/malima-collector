@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 
@@ -63,21 +64,32 @@ public class InputParser {
 
     private GitlabCollector gitlabCollector = new GitlabCollector();
 
-    public void handler(){
-        String content = gitlabCollector.getContent();
-        if (true){ //check string beforehand, change condition
+    public Object handler(){
+        GitlabCollector gitlabCollector = new GitlabCollector();
+        String URL = gitlabCollector.buildURL("_kgEoUeHqf5LPLU3beYf","4278148");
+        String content = gitlabCollector.callURL(URL);
+        if (URL.substring(27,27).equals("p") || URL.substring(27,27).equals("u")){
             try {
                 Project[] project = projectFromJsonString(content);
+                return project;
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
         } else {
             try {
                 Group group = groupFromJsonString(content);
+                return group;
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
         }
+    }
+
+    @RequestMapping("/content")
+    public Object translatedContent(Object object){
+        return object;
     }
 }
 

@@ -35,7 +35,7 @@ public class GitlabCollector {
         return newURL;
     }
 
-    public static String callURL(String myURL) {
+    public String callURL(String myURL) {
         StringBuilder sb = new StringBuilder();
         URLConnection urlConn = null;
         InputStreamReader in = null;
@@ -62,12 +62,6 @@ public class GitlabCollector {
         }
 
         return sb.toString();
-    }
-
-    private String content = callURL(buildURL("jLQauiy3yux8ZTBx_h6F","4278148")); //remove hardcoding
-
-    public String getContent() {
-        return content;
     }
 }
 

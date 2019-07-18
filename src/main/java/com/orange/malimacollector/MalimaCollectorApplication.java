@@ -1,6 +1,7 @@
 package com.orange.malimacollector;
 
 import com.orange.malimacollector.repository.ClientResources;
+import com.orange.malimacollector.service.Gitlab.InputParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,6 +34,11 @@ public class MalimaCollectorApplication extends WebSecurityConfigurerAdapter {
 	@RequestMapping("/user")
 	public Principal user(Principal principal){
 		return principal;
+	}
+
+	@RequestMapping("/content")
+	public Object translatedContent(){
+		return new InputParser().handler();
 	}
 
 	@Autowired

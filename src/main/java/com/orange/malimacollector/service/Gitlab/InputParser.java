@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 
@@ -62,13 +61,12 @@ public class InputParser {
         return writer;
     }
 
-    private GitlabCollector gitlabCollector = new GitlabCollector();
-
     public Object handler(){
         GitlabCollector gitlabCollector = new GitlabCollector();
-        String URL = gitlabCollector.buildURL("_kgEoUeHqf5LPLU3beYf","4278148");
+        String URL = gitlabCollector.buildURL("8aHcnAb8eVSjauuSkQj7","4278148");
+//        System.out.println("URL substring is " + URL.substring(26,27));
         String content = gitlabCollector.callURL(URL);
-        if (URL.substring(27,27).equals("p") || URL.substring(27,27).equals("u")){
+        if (URL.substring(26,27).equals("p") || URL.substring(26,27).equals("u")){
             try {
                 return projectFromJsonString(content);
             } catch (IOException e) {
@@ -83,11 +81,6 @@ public class InputParser {
                 return null;
             }
         }
-    }
-
-    @RequestMapping("/content")
-    public Object translatedContent(){
-        return handler();
     }
 }
 

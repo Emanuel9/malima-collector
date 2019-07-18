@@ -17,8 +17,8 @@
 <script type="text/javascript">
     $.get("/user", function(data) {
         $("#user").html(data.userAuthentication.details.name);
-        $(".unauthenticated").hide()
-        $(".authenticated").show()
+        $(".unauthenticated").hide();
+        $(".authenticated").show();
     });
 </script>
 <div class="container unauthenticated">
@@ -60,13 +60,22 @@
         <input type="button" value="Logout" onclick="logout()" class="btn btn-primary"/>
     </div>
 </div>
+<!--<script type="text/javascript">-->
+<!--    $.ajax({-->
+<!--        type: 'GET',-->
+<!--        url: 'https://localhost:443/content',-->
+<!--        success: function(result){-->
+<!--            $("#handler").html(result);-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
 <script type="text/javascript">
     $.get("/content", function(data){
-        $("#handler").html(data.name);
+        $("#content").html(data.0.name);
     });
 </script>
 <div class="container authenticated" style="display:none">
-    Project name is: <span id="handler"></span>
+    Project name is: <span id="content"></span>
 </div>
 </body>
 </html>

@@ -1,7 +1,9 @@
 package com.orange.malimacollector.service.Gitlab;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties
 public class Owner {
     private long id;
     private String name;

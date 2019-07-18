@@ -7,7 +7,7 @@ import java.net.URLConnection;
 import java.nio.charset.Charset;
 
 public class GitlabCollector {
-    private GitLabParameters parameters;
+    private GitLabParameters parameters = new GitLabParameters(true, false, false, true);
 
     public GitLabParameters getParameters() {
         return parameters;
@@ -17,7 +17,7 @@ public class GitlabCollector {
         this.parameters = parameters;
     }
 
-    public String buildURL(String accessToken, String ID){
+    public String buildURL(String privateToken, String ID){
         String newURL = "https://gitlab.com/api/v4/";
         String modifier;
         if (parameters.isGroup()){
@@ -31,7 +31,7 @@ public class GitlabCollector {
         if (parameters.hasID()) {
             newURL = newURL + ID + "/";
         }
-        newURL += ("projects" + "?access_token=" + accessToken);
+        newURL += ("projects" + "?private_token=" + privateToken);
         return newURL;
     }
 

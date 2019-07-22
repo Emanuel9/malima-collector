@@ -4,10 +4,74 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.orange.malimacollector.entities.GitLabParameters;
+import com.orange.malimacollector.entities.Group;
+import com.orange.malimacollector.entities.Project;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
 
-public class InputParser {
+public class GitlabService {
+    private GitLabParameters parameters = new GitLabParameters(true, false, false, true);
+
+    public GitLabParameters getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(GitLabParameters parameters) {
+        this.parameters = parameters;
+    }
+
+    public String buildURL(String privateToken, String ID){
+        String newURL = "https://gitlab.com/api/v4/";
+        String modifier;
+        if (parameters.isGroup()){
+            modifier = "groups/";
+        } else if (parameters.isProjects()){
+            modifier = "users/";
+        } else {
+            modifier = "";
+        }
+        newURL += modifier;
+        if (parameters.hasID()) {
+            newURL = newURL + ID + "/";
+        }
+        newURL += ("projects" + "?private_token=" + privateToken);
+        return newURL;
+    }
+
+    public String callURL(String myURL) {
+        StringBuilder sb = new StringBuilder();
+        URLConnection urlConn = null;
+        InputStreamReader in = null;
+        try {
+            URL url = new URL(myURL);
+            urlConn = url.openConnection();
+            if (urlConn != null)
+                urlConn.setReadTimeout(60 * 1000);
+            if (urlConn != null && urlConn.getInputStream() != null) {
+                in = new InputStreamReader(urlConn.getInputStream(),
+                        Charset.defaultCharset());
+                BufferedReader bufferedReader = new BufferedReader(in);
+                if (bufferedReader != null) {
+                    int cp;
+                    while ((cp = bufferedReader.read()) != -1) {
+                        sb.append((char) cp);
+                    }
+                    bufferedReader.close();
+                }
+            }
+            in.close();
+        } catch (Exception e) {
+            throw new RuntimeException("Exception while calling URL:"+ myURL, e);
+        }
+
+        return sb.toString();
+    }
     // Serialize/deserialize helpers
 
     public static Project[] projectFromJsonString(String json) throws IOException {
@@ -62,10 +126,8 @@ public class InputParser {
     }
 
     public Object handler(){
-        GitlabCollector gitlabCollector = new GitlabCollector();
-        String URL = gitlabCollector.buildURL("8aHcnAb8eVSjauuSkQj7","4278148");
-//        System.out.println("URL substring is " + URL.substring(26,27));
-        String content = gitlabCollector.callURL(URL);
+        String URL = buildURL("8aHcnAb8eVSjauuSkQj7","4278148");
+        String content = callURL(URL);
         if (URL.substring(26,27).equals("p") || URL.substring(26,27).equals("u")){
             try {
                 return projectFromJsonString(content);
@@ -83,4 +145,3 @@ public class InputParser {
         }
     }
 }
-

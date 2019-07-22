@@ -1,10 +1,11 @@
-package com.orange.malimacollector.service.Gitlab;
+package com.orange.malimacollector.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Permissions {
+
     private ProjectAccess projectAccess;
     private Object groupAccess;
 
@@ -17,4 +18,5 @@ public class Permissions {
     public Object getGroupAccess() { return groupAccess; }
     @JsonProperty("group_access")
     public void setGroupAccess(Object value) { this.groupAccess = value; }
+
 }

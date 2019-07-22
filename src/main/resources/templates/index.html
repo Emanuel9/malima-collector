@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -69,13 +69,13 @@
 <!--        }-->
 <!--    });-->
 <!--</script>-->
-<script type="text/javascript">
-    $.get("/content", function(data){
-        $("#content").html(data.0.name);
-    });
-</script>
+<!--<script type="text/javascript">-->
+<!--    $.get("/content", function(data){-->
+<!--        $("#content").html(data.0.name);-->
+<!--    });-->
+<!--</script>-->
 <div class="container authenticated" style="display:none">
-    Project name is: <span id="content"></span>
+    Project name is: <span th:text="${name}"/>
 </div>
 </body>
 </html>

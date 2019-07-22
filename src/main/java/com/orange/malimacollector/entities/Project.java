@@ -1,11 +1,13 @@
-package com.orange.malimacollector.service.Gitlab;
+package com.orange.malimacollector.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
-    private long id;
+    private Long id;
     private String description;
     private String name;
     private String nameWithNamespace;
@@ -54,9 +56,9 @@ public class Project {
     private boolean mirror;
 
     @JsonProperty("id")
-    public long getID() { return id; }
+    public Long getID() { return id; }
     @JsonProperty("id")
-    public void setID(long value) { this.id = value; }
+    public void setID(Long value) { this.id = value; }
 
     @JsonProperty("description")
     public String getDescription() { return description; }
@@ -287,4 +289,12 @@ public class Project {
     public boolean getMirror() { return mirror; }
     @JsonProperty("mirror")
     public void setMirror(boolean value) { this.mirror = value; }
+
+    public Project(){}
+
+    public Project(@NotNull long id, @NotNull String name, @NotNull Owner owner) {
+        this.id = id;
+        this.name = name;
+        this.owner = owner;
+    }
 }

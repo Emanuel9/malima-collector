@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.orange.malimacollector.entities.GitLabParameters;
 import com.orange.malimacollector.entities.Group;
 import com.orange.malimacollector.entities.Project;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 
+@Service
 public class GitlabService {
     private GitLabParameters parameters = new GitLabParameters(true, false, false, true);
 
@@ -125,23 +127,14 @@ public class GitlabService {
         return writer;
     }
 
-    public Object handler(){
+    public Project[] handler(){
         String URL = buildURL("8aHcnAb8eVSjauuSkQj7","4278148");
         String content = callURL(URL);
-        if (URL.substring(26,27).equals("p") || URL.substring(26,27).equals("u")){
             try {
                 return projectFromJsonString(content);
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
             }
-        } else {
-            try {
-                return groupFromJsonString(content);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
     }
 }

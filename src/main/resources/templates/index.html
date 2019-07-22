@@ -14,68 +14,68 @@
 </head>
 <body>
 <h1 style="color:orange;font-size:300%">Malima Collector</h1>
-<script type="text/javascript">
-    $.get("/user", function(data) {
-        $("#user").html(data.userAuthentication.details.name);
-        $(".unauthenticated").hide();
-        $(".authenticated").show();
-    });
-</script>
-<div class="container unauthenticated">
-    <div>
-        With Facebook: <a href="/login/facebook">click here</a>
-    </div>
-    <div>
-        With Github: <a href="/login/github">click here</a>
-    </div>
-</div>
-<script type="text/javascript">
-    $.ajaxSetup({
-        beforeSend : function(xhr, settings) {
-            if (settings.type == 'POST' || settings.type == 'PUT'
-                || settings.type == 'DELETE') {
-                if (!(/^http:.*/.test(settings.url) || /^https:.*/
-                    .test(settings.url))) {
-                    // Only send the token to relative URLs i.e. locally.
-                    xhr.setRequestHeader("X-XSRF-TOKEN",
-                        Cookies.get('XSRF-TOKEN'));
-                }
-            }
-        }
-    });
-</script>
-<script type="text/javascript">
-    var logout = function() {
-    $.post("/logout", function() {
-        $("#user").html('');
-        $(".unauthenticated").show();
-        $(".authenticated").hide();
-    })
-    return true;
-}
-</script>
-<div class="container authenticated" style="display:none">
-    Logged in as: <span id="user"></span>
-    <div>
-        <input type="button" value="Logout" onclick="logout()" class="btn btn-primary"/>
-    </div>
-</div>
 <!--<script type="text/javascript">-->
-<!--    $.ajax({-->
-<!--        type: 'GET',-->
-<!--        url: 'https://localhost:443/content',-->
-<!--        success: function(result){-->
-<!--            $("#handler").html(result);-->
+<!--    $.get("/user", function(data) {-->
+<!--        $("#user").html(data.userAuthentication.details.name);-->
+<!--        $(".unauthenticated").hide();-->
+<!--        $(".authenticated").show();-->
+<!--    });-->
+<!--</script>-->
+<!--<div class="container unauthenticated">-->
+<!--    <div>-->
+<!--        With Facebook: <a href="/login/facebook">click here</a>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        With Github: <a href="/login/github">click here</a>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script type="text/javascript">-->
+<!--    $.ajaxSetup({-->
+<!--        beforeSend : function(xhr, settings) {-->
+<!--            if (settings.type == 'POST' || settings.type == 'PUT'-->
+<!--                || settings.type == 'DELETE') {-->
+<!--                if (!(/^http:.*/.test(settings.url) || /^https:.*/-->
+<!--                    .test(settings.url))) {-->
+<!--                    // Only send the token to relative URLs i.e. locally.-->
+<!--                    xhr.setRequestHeader("X-XSRF-TOKEN",-->
+<!--                        Cookies.get('XSRF-TOKEN'));-->
+<!--                }-->
+<!--            }-->
 <!--        }-->
 <!--    });-->
 <!--</script>-->
 <!--<script type="text/javascript">-->
-<!--    $.get("/content", function(data){-->
-<!--        $("#content").html(data.0.name);-->
-<!--    });-->
+<!--    var logout = function() {-->
+<!--    $.post("/logout", function() {-->
+<!--        $("#user").html('');-->
+<!--        $(".unauthenticated").show();-->
+<!--        $(".authenticated").hide();-->
+<!--    })-->
+<!--    return true;-->
+<!--}-->
 <!--</script>-->
-<div class="container authenticated" style="display:none">
-    Project name is: <span th:text="${name}"/>
-</div>
+<!--<div class="container authenticated" style="display:none">-->
+<!--    Logged in as: <span id="user"></span>-->
+<!--    <div>-->
+<!--        <input type="button" value="Logout" onclick="logout()" class="btn btn-primary"/>-->
+<!--    </div>-->
+<!--</div>-->
+<!--&lt;!&ndash;<script type="text/javascript">&ndash;&gt;-->
+<!--&lt;!&ndash;    $.ajax({&ndash;&gt;-->
+<!--&lt;!&ndash;        type: 'GET',&ndash;&gt;-->
+<!--&lt;!&ndash;        url: 'https://localhost:443/content',&ndash;&gt;-->
+<!--&lt;!&ndash;        success: function(result){&ndash;&gt;-->
+<!--&lt;!&ndash;            $("#handler").html(result);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script type="text/javascript">&ndash;&gt;-->
+<!--&lt;!&ndash;    $.get("/content", function(data){&ndash;&gt;-->
+<!--&lt;!&ndash;        $("#content").html(data.0.name);&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--<div class="container authenticated" style="display:none">-->
+<!--    Project name is: <span th:text="${name}"/>-->
+<!--</div>-->
 </body>
 </html>

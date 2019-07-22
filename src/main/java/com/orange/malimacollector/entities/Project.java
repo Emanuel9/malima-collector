@@ -3,8 +3,6 @@ package com.orange.malimacollector.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotNull;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
     private Long id;
@@ -289,12 +287,4 @@ public class Project {
     public boolean getMirror() { return mirror; }
     @JsonProperty("mirror")
     public void setMirror(boolean value) { this.mirror = value; }
-
-    public Project(){}
-
-    public Project(@NotNull long id, @NotNull String name, @NotNull Owner owner) {
-        this.id = id;
-        this.name = name;
-        this.owner = owner;
-    }
 }

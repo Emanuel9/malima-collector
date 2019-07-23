@@ -1,4 +1,4 @@
-package com.orange.malimacollector.entities;
+package com.orange.malimacollector.entities.GitlabEntities;
 
 public class GitLabParameters {
     private boolean projects;

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.orange.malimacollector.entities.GitLabParameters;
-import com.orange.malimacollector.entities.Group;
-import com.orange.malimacollector.entities.Project;
+import com.orange.malimacollector.entities.GitlabEntities.GitLabParameters;
+import com.orange.malimacollector.entities.GitlabEntities.Group;
+import com.orange.malimacollector.entities.GitlabEntities.Project;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;

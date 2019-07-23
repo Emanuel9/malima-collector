@@ -1,6 +1,6 @@
 package com.orange.malimacollector.controller;
 
-import com.orange.malimacollector.entities.Project;
+import com.orange.malimacollector.entities.GitlabEntities.Project;
 import com.orange.malimacollector.service.Gitlab.GitlabService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +17,8 @@ public class GitlabController {
     @RequestMapping(method = RequestMethod.GET, value = "/project")
     public String projectPage(Model model){
         try {
-            Project[] project = gitlabService.handler();
-            model.addAttribute("project", project[0]);
+            Project[] projects = gitlabService.handler();
+            model.addAttribute("projects", projects);
         } catch (Exception e){
             e.printStackTrace();
         }

@@ -1,6 +1,6 @@
 //package com.orange.malimacollector.repositories;
 //
-//import com.orange.malimacollector.entities.Project;
+//import com.orange.malimacollector.entities.GitlabEntities.Project;
 //import org.springframework.data.jpa.repository.JpaRepository;
 //
 //import java.util.Optional;

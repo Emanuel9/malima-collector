@@ -24,9 +24,4 @@ public class GitlabController {
         }
         return "project";
     }
-
-//    @RequestMapping("/")
-//    public String home(){
-//        return "index";
-//    }
 }

@@ -2,6 +2,7 @@ package com.orange.malimacollector.entities.MattermostEntities;
 
 import com.fasterxml.jackson.annotation.*;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Reaction {
     private String userID;
     private String postID;

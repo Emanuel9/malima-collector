@@ -8,13 +8,9 @@ import com.orange.malimacollector.entities.GitlabEntities.GitLabParameters;
 import com.orange.malimacollector.entities.GitlabEntities.Group;
 import com.orange.malimacollector.entities.GitlabEntities.Project;
 import org.springframework.stereotype.Service;
+import com.orange.malimacollector.service.URLService;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.Charset;
 
 @Service
 public class GitlabService {
@@ -44,35 +40,6 @@ public class GitlabService {
         }
         newURL += ("projects" + "?private_token=" + privateToken);
         return newURL;
-    }
-
-    public String callURL(String myURL) {
-        StringBuilder sb = new StringBuilder();
-        URLConnection urlConn = null;
-        InputStreamReader in = null;
-        try {
-            URL url = new URL(myURL);
-            urlConn = url.openConnection();
-            if (urlConn != null)
-                urlConn.setReadTimeout(60 * 1000);
-            if (urlConn != null && urlConn.getInputStream() != null) {
-                in = new InputStreamReader(urlConn.getInputStream(),
-                        Charset.defaultCharset());
-                BufferedReader bufferedReader = new BufferedReader(in);
-                if (bufferedReader != null) {
-                    int cp;
-                    while ((cp = bufferedReader.read()) != -1) {
-                        sb.append((char) cp);
-                    }
-                    bufferedReader.close();
-                }
-            }
-            in.close();
-        } catch (Exception e) {
-            throw new RuntimeException("Exception while calling URL:"+ myURL, e);
-        }
-
-        return sb.toString();
     }
     // Serialize/deserialize helpers
 
@@ -129,7 +96,7 @@ public class GitlabService {
 
     public Project[] handler(){
         String URL = buildURL("8aHcnAb8eVSjauuSkQj7","4278148");
-        String content = callURL(URL);
+        String content = new URLService().callURL(URL);
             try {
                 return projectFromJsonString(content);
             } catch (IOException e) {

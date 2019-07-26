@@ -3,7 +3,13 @@ package com.orange.malimacollector.service.Mattermost;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.orange.malimacollector.entities.MattermostEntities.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.orange.malimacollector.entities.MattermostEntities.Channel;
+import com.orange.malimacollector.entities.MattermostEntities.PostList;
+import com.orange.malimacollector.entities.MattermostEntities.Teams;
+import com.orange.malimacollector.entities.MattermostEntities.User;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -11,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Map;
 
 @Service
 public class MattermostService {
@@ -125,7 +133,7 @@ public class MattermostService {
                 .append(URL);
         stringBuilder
                 .append(team.getID())
-                .append("/channels/ids");
+                .append("/channels");
         String command = stringBuilder.toString();
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
         processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
@@ -190,6 +198,49 @@ public class MattermostService {
             return null;
         }
     }
+    //search posts in a team
+    //curl -d "{\"terms\": \"test\",\"is_or_search\":true,\"time_zone_offset\": 0,\"include_deleted_channels\":true,\"page\": 0,\"per_page\": 60}" -i -X POST -H "Authorization: Bearer sct9g5j18fgazkoau866fn6odw" http://localhost:8065/api/v4/teams/biey6xaoxig9ume363f7qh8ryc/posts/search
+    public String curlCommands(String URL, Teams team, String searchTerm) {
+        String token = sessionToken(curlInitializeLogin()).trim();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append("curl -d \"{\\\"terms\\\": \\\"")
+                .append(searchTerm)
+                .append("\\\",\\\"is_or_search\\\":true,\\\"time_zone_offset\\\": 0,\\\"include_deleted_channels\\\":true,\\\"page\\\": 0,\\\"per_page\\\": 60}\" -X POST -H \"")
+                .append("Authorization: Bearer")
+                .append(" ")
+                .append(token)
+                .append('"')
+                .append(" ")
+                .append(URL);
+        stringBuilder
+                .append(team.getID())
+                .append("/posts/search");
+        String command = stringBuilder.toString();
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
+        processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
+        try {
+            Process process = processBuilder.start();
+            StringBuilder sb = new StringBuilder();
+            InputStreamReader in = null;
+            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
+            BufferedReader bufferedReader = new BufferedReader(in);
+            if (bufferedReader != null) {
+                int cp;
+                while ((cp = bufferedReader.read()) != -1) {
+                    sb.append((char) cp);
+                }
+                bufferedReader.close();
+            }
+            in.close();
+            return sb.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     // Serialize/deserialize helpers
 
     public static User userFromJsonString(String json) throws IOException {
@@ -204,75 +255,84 @@ public class MattermostService {
         return getChannelObjectReader().readValue(json);
     }
 
-    public static Channel[] postFromJsonString(String json) throws IOException {
+    public static PostList postFromJsonString(String json) throws IOException {
         return getPostObjectReader().readValue(json);
     }
 
-    private static ObjectReader reader;
-    private static ObjectWriter writer;
+    private static ObjectReader userReader;
+    private static ObjectWriter userWriter;
+
+    private static ObjectReader teamReader;
+    private static ObjectWriter teamWriter;
+
+    private static ObjectReader channelReader;
+    private static ObjectWriter channelWriter;
+
+    private static ObjectReader postReader;
+    private static ObjectWriter postWriter;
 
     private static void instantiateUserMapper() {
         ObjectMapper mapper = new ObjectMapper();
-        reader = mapper.reader(User.class);
-        writer = mapper.writerFor(User.class);
+        userReader = mapper.reader(User.class);
+        userWriter = mapper.writerFor(User.class);
     }
 
     private static void instantiateTeamsMapper() {
         ObjectMapper mapper = new ObjectMapper();
-        reader = mapper.reader(Teams[].class);
-        writer = mapper.writerFor(Teams[].class);
+        teamReader = mapper.reader(Teams[].class);
+        teamWriter = mapper.writerFor(Teams[].class);
     }
 
     private static void instantiateChannelMapper() {
         ObjectMapper mapper = new ObjectMapper();
-        reader = mapper.reader(Channel[].class);
-        writer = mapper.writerFor(Channel[].class);
+        channelReader = mapper.reader(Channel[].class);
+        channelWriter = mapper.writerFor(Channel[].class);
     }
 
     private static void instantiatePostMapper() {
         ObjectMapper mapper = new ObjectMapper();
-        reader = mapper.reader(PostList.class);
-        writer = mapper.writerFor(PostList.class);
+        postReader = mapper.reader(PostList.class);
+        postWriter = mapper.writerFor(PostList.class);
     }
 
     private static ObjectReader getUserObjectReader() {
-        if (reader == null) instantiateUserMapper();
-        return reader;
+        if (userReader == null) instantiateUserMapper();
+        return userReader;
     }
 
     private static ObjectWriter getUserObjectWriter() {
-        if (writer == null) instantiateUserMapper();
-        return writer;
+        if (userWriter == null) instantiateUserMapper();
+        return userWriter;
     }
 
     private static ObjectReader getTeamsObjectReader() {
-        if (reader == null) instantiateTeamsMapper();
-        return reader;
+        if (teamReader == null) instantiateTeamsMapper();
+        return teamReader;
     }
 
     private static ObjectWriter getTeamsObjectWriter() {
-        if (writer == null) instantiateTeamsMapper();
-        return writer;
+        if (teamWriter == null) instantiateTeamsMapper();
+        return teamWriter;
     }
 
     private static ObjectReader getChannelObjectReader() {
-        if (reader == null) instantiateChannelMapper();
-        return reader;
+        if (channelReader == null) instantiateChannelMapper();
+        return channelReader;
     }
 
     private static ObjectWriter getChannelObjectWriter() {
-        if (writer == null) instantiateChannelMapper();
-        return writer;
+        if (channelWriter == null) instantiateChannelMapper();
+        return channelWriter;
     }
 
     private static ObjectReader getPostObjectReader() {
-        if (reader == null) instantiatePostMapper();
-        return reader;
+        if (postReader == null) instantiatePostMapper();
+        return postReader;
     }
 
     private static ObjectWriter getPostObjectWriter() {
-        if (writer == null) instantiatePostMapper();
-        return writer;
+        if (postWriter == null) instantiatePostMapper();
+        return postWriter;
     }
 
     public Object handler(int choice){
@@ -322,5 +382,26 @@ public class MattermostService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public ArrayList<String> handler(String searchTerm, Teams team) {
+        String URL = buildURL(3);
+        ArrayList<String> posts = new ArrayList<>();
+        JsonObject o = new JsonParser().parse(curlCommands(URL, team, searchTerm)).getAsJsonObject();
+
+        for(Map.Entry<String, JsonElement> entry : o.entrySet()) {
+            if (entry.getKey().equals("posts")) {
+                JsonObject obj = new JsonParser().parse(entry.getValue().toString()).getAsJsonObject();
+                for (Map.Entry<String, JsonElement> val : obj.entrySet()) {
+                    JsonObject content = new JsonParser().parse(val.getValue().toString()).getAsJsonObject();
+                    for (Map.Entry<String, JsonElement> ct : content.entrySet()) {
+                        if (ct.getKey().equals("message")) {
+                            posts.add(ct.getValue().toString());
+                        }
+                    }
+                }
+            }
+        }
+        return posts;
     }
 }

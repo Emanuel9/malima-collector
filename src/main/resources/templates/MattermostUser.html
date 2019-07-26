@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Mattermost User</title>
+    <title>Mattermost Content</title>
 </head>
 <body>
 
@@ -24,15 +24,15 @@
             <td th:text="${user.lastName}">Last Name</td>
         </tr>
     </table>
-<!--    <h2 style="color:orange">Mattermost Teams</h2>-->
-<!--    <table class="table table-striped">-->
-<!--        <th:block th:each="team : ${teams}">-->
-<!--            <tr>-->
-<!--                <th>Team Name</th>-->
-<!--                <td th:text="${team.name}">Team</td>-->
-<!--            </tr>-->
-<!--        </th:block>-->
-<!--    </table>-->
+    <h2 style="color:orange">Mattermost Posts</h2>
+    <table class="table table-striped">
+        <th:block th:each="post : ${posts}">
+            <tr>
+                <th>Post Content</th>
+                <td th:text="${post}">post</td>
+            </tr>
+        </th:block>
+    </table>
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.orange.malimacollector.entities.GitlabEntities.Project;
+import com.orange.malimacollector.entities.SonarEntities.Project;
 import com.orange.malimacollector.entities.SonarEntities.Issue;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +63,7 @@ public class SonarService {
         return getProjectWriter().writeValueAsString(obj);
     }
 
-    public static Project issueFromJsonString(String json) throws IOException {
+    public static Issue issueFromJsonString(String json) throws IOException {
         return getIssueReader().readValue(json);
     }
 

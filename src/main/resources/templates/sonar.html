@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Sonar</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <h2 style="color:orange">Sonar Project Information</h2>
+    <table class="table table-striped">
+        <th:block th:each="project: ${project.components}">
+            <tr>
+                <th>Project name</th>
+                <td th:text="${project.name}">Project Name</td>
+            </tr>
+        </th:block>
+    </table>
+    <h2 style="color:orange">Sonar Issue Information</h2>
+    <table class="table table-striped">
+        <th:block th:each="issue: ${issue.issues}">
+            <tr>
+                <th>Status</th>
+                <td th:text="${issue.status}">Status</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td th:text="${issue.message}">Message</td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+
+</body>
+</html>

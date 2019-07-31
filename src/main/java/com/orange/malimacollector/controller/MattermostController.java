@@ -26,12 +26,6 @@ public class MattermostController {
         ArrayList<String> posts= new ArrayList<>();
         for (Teams team: teams){
             posts.addAll(mattermostService.handler("test", team));
-//            for (Channel channel: channels){
-//                System.out.println("Channel " + channel.getName() + " in team " + team.getName());
-//                PostList posts = (PostList) mattermostService.handler(channel);
-//                System.out.println("One post: " + posts.getPosts().getProperty1().getMessage());
-//                model.addAttribute(channel.getDisplayName(), posts);
-//            }
         }
         model.addAttribute("posts", posts);
         return "MattermostUser";

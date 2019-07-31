@@ -27,8 +27,8 @@
 #  main:
 #    allow-bean-definition-overriding: true
 #
-#server:
-#  port: 443
+server:
+  port: 8880
 #  ssl:
 #    key-store-type: PKCS12
 #    key-store: classpath:keystore/newkey.p12

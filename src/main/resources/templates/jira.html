@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Jira</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <h2 style="color:orange">Projects</h2>
+    <table class="table table-striped">
+        <th:block th:each="project: ${projects}">
+            <tr>
+                <th>Project Name</th>
+                <td th:text="${project.name}">Project Name</td>
+            </tr>
+        </th:block>
+    </table>
+    <h2 style="color:orange">Issues</h2>
+    <table class="table table-striped">
+        <th:block th:each="projectIssues: ${issues}">
+            <th:block th:each="issue: ${projectIssues.issues}">
+                <tr>
+                    <th>Issue Name</th>
+                    <td th:text="${issue.key}">Issue Name</td>
+                    <th>Issue Description</th>
+                    <td th:text="${issue.fields.description}">Issue Description</td>
+                </tr>
+            </th:block>
+        </th:block>
+    </table>
+</div>
+
+</body>
+</html>

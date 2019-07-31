@@ -1,7 +1,9 @@
 package com.orange.malimacollector.entities.JenkinsEntities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PrimaryView {
     private String primaryViewClass;
     private String name;

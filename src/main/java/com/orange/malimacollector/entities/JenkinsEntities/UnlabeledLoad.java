@@ -1,7 +1,9 @@
 package com.orange.malimacollector.entities.JenkinsEntities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UnlabeledLoad {
     private String unlabeledLoadClass;
 

@@ -8,5 +8,27 @@
 
 <div th:replace="fragments/header :: header"></div>
 
+<div class="container">
+    <h2 style="color:orange">Rundeck Project Information</h2>
+    <table class="table table-striped">
+        <th:block th:each="project: ${projects}">
+            <tr>
+                <th>Project name</th>
+                <td th:text="${project.name}">Project Name</td>
+            </tr>
+        </th:block>
+    </table>
+    <h2 style="color:orange">Rundeck Jobs</h2>
+    <table class="table table-striped">
+        <th:block th:each="job: ${jobs}">
+            <tr>
+                <th>Job Name</th>
+                <td th:text="${job.name}">Job Name</td>
+                <th>Job Description</th>
+                <td th:text="${job.description}">Job Description</td>
+            </tr>
+        </th:block>
+    </table>
+</div>
 </body>
 </html>

@@ -15,6 +15,8 @@
             <tr>
                 <th>Page Title</th>
                 <td th:text="${result.title}">Page Title</td>
+                <th>Page Link</th>
+                <td><a th:href="${result.links.self}">Link</a></td>
             </tr>
         </th:block>
     </table>

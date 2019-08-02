@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div class="container">
+    <h2>User profile</h2>
+    <table class="table table-striped">
+        <tr>
+            <th><h3> Users details for: </h3></th>
+            <td th:text = "${user.email}">Username</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td th:text = "${profileToEdit.firstName}">First Name</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td th:text = "${profileToEdit.lastName}">Last Name</td>
+        </tr>
+        <tr>
+            <th>Bio</th>
+            <td th:text = "${profileToEdit.bio}">Bio</td>
+        </tr>
+
+    </table>
+</div>
+
+<div><a th:href="@{'/profile/edit'}">Edit profile</a>
+</div>
+
+</body>
+</html>

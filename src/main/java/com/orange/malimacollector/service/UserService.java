@@ -1,43 +1,34 @@
 package com.orange.malimacollector.service;
 
 import com.orange.malimacollector.entities.User;
-import com.orange.malimacollector.entities.UserDto;
-import com.orange.malimacollector.exceptions.EmailExistsException;
-import com.orange.malimacollector.model.IUserService;
 import com.orange.malimacollector.model.Roles;
 import com.orange.malimacollector.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @Service
-public class UserService implements IUserService {
+public class UserService {
     @Autowired
-    private UserRepository repository;
+    UserRepository userRepository;
 
-    @Transactional
-    @Override
-    public User registerNewUserAccount(UserDto accountDto)
-            throws EmailExistsException {
+    @Autowired
+    private SecurePassword securePassword;
 
-        if (emailExists(accountDto.getEmail())) {
-            throw new EmailExistsException(
-                    "There is an account with that email address:"  + accountDto.getEmail());
+    public User saveUser(User user){
+        User userOptional = userRepository.findByEmail(user.getEmail());
+        if( userOptional != null ){
+            return userOptional;
         }
-        User user = new User();
-        user.setFirstName(accountDto.getFirstName());
-        user.setLastName(accountDto.getLastName());
-        user.setPassword(accountDto.getPassword());
-        user.setEmail(accountDto.getEmail());
-        user.setRole(Roles.ROLE_USER);
-        return repository.save(user);
-    }
-    private boolean emailExists(String email) {
-        User user = repository.findByEmail(email);
-        if (user != null) {
-            return true;
+
+        if( user.getRole() == null ){
+            user.setRole(Roles.ROLE_USER);
         }
-        return false;
+        user.setPassword(securePassword.passwordEncoder().encode(user.getPassword()));
+
+        try {
+            user = userRepository.saveAndFlush(user);
+        }catch (Exception ex){}
+
+        return user;
     }
 }

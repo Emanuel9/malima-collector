@@ -11,44 +11,28 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "firstName")
-    private String firstName;
-
-    @Column(name = "lastName")
-    private String lastName;
-
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private Roles role;
+    private Roles role = Roles.ROLE_USER;
 
     public User() { }
+
+    public User(User user) {
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.role = user.getRole();
+    }
 
     public User(String password, String email, Roles role) {
         this.password = password;
         this.email = email;
         this.role = role;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getPassword() {

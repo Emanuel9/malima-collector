@@ -1,36 +1,14 @@
-#security:
-#  require-ssl: true
-#
-#facebook:
-#  client:
-#    clientId: 2274981545955176
-#    clientSecret: 0e9bb606c35cd30156d6314c614b4333
-#    accessTokenUri: https://graph.facebook.com/oauth/access_token
-#    userAuthorizationUri: https://www.facebook.com/dialog/oauth
-#    tokenName: oauth_token
-#    authenticationScheme: query
-#    clientAuthenticationScheme: form
-#  resource:
-#    userInfoUri: https://graph.facebook.com/me
-#
-#github:
-#  client:
-#    clientId: 506f060ec316d2c8e279
-#    clientSecret: 6a0d543a8ba270ccaaf1862b1ce982a73a49ee4e
-#    accessTokenUri: https://github.com/login/oauth/access_token
-#    userAuthorizationUri: https://github.com/login/oauth/authorize
-#    clientAuthenticationScheme: form
-#  resource:
-#    userInfoUri: https://api.github.com/user
-#
-#spring:
-#  main:
-#    allow-bean-definition-overriding: true
-#
 server:
   port: 8880
-#  ssl:
-#    key-store-type: PKCS12
-#    key-store: classpath:keystore/newkey.p12
-#    key-store-password: testing
-#    key-alias: key
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/collectordb
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect

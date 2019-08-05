@@ -33,30 +33,6 @@
             <a class="nav-link" th:href="@{/confluence}">Confluence Information</a>
         </li>
     </ul>
-
-    <div sec:authorize="isAnonymous()">
-        <span style="color:white">Welcome!</span>
-    </div>
-
-    <div sec:authorize="isAuthenticated()">
-        <span style="color:white">Welcome!</span>
-    </div>
-
-    <ul>
-        <div class="navbar-form navbar-right">
-            <div sec:authorize="isAuthenticated()">
-
-                <a class="btn btn-success"th:href="@{/logout}">Log out </a>
-
-            </div>
-
-            <div sec:authorize="isAnonymous()">
-                <a class="btn btn-success" th:href="@{/login}">Login</a>
-                <a class="btn btn-primary" th:href="@{/registration}">Register</a>
-            </div>
-        </div>
-
-    </ul>
 </nav>
 </body>
 </html>

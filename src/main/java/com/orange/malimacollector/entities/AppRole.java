@@ -16,8 +16,7 @@ public class AppRole {
     @Column(name = "Role_Name", length = 30, nullable = false)
     private String roleName;
 
-    public AppRole(Long roleId, String roleName) {
-        this.roleId = roleId;
+    public AppRole(String roleName) {
         this.roleName = roleName;
     }
 

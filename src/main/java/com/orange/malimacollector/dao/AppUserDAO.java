@@ -28,7 +28,15 @@ public class AppUserDAO {
         initDATA();
     }
 
-    private static void initDATA(){}
+    private static void initDATA(){
+        String encryptedPassword = "$2a$10$lE7Z0WQsFNcPpWKRWDaL7OyCDQKUEG//apO1zuf/KWz/pvXK/kFGK";
+
+        AppUser alexm = new AppUser(1L, "alexm", encryptedPassword, "alexmcn07@gmail.com", true);
+        AppRole role = new AppRole("ROLE_ADMIN");
+
+        USERS_MAP.put(alexm.getUserId(), alexm);
+        ROLE_MAP.put(alexm.getUserId(), role);
+    }
 
     public Long getMaxUserId() {
         long max = 0;
@@ -73,7 +81,7 @@ public class AppUserDAO {
 
         AppUser user = new AppUser(userId, form.getUserName(),
                 encryptedPassword, form.getEmail(), false);
-        AppRole role = new AppRole((long) 1, "ROLE_USER");
+        AppRole role = new AppRole("ROLE_USER");
 
         USERS_MAP.put(userId, user);
         ROLE_MAP.put(userId, role);

@@ -16,6 +16,9 @@ public class AppRole {
     @Column(name = "Role_Name", length = 30, nullable = false)
     private String roleName;
 
+    public AppRole() {
+    }
+
     public AppRole(String roleName) {
         this.roleName = roleName;
     }

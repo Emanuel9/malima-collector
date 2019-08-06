@@ -25,6 +25,9 @@ public class AppUser {
     @Column(name = "_Enabled", length = 1, nullable = false)
     private boolean enabled;
 
+    public AppUser() {
+    }
+
     public AppUser(Long userId, String userName, String encryptedPassword, String email, boolean enabled) {
         this.userId = userId;
         this.userName = userName;

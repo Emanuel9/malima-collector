@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics</title>
+</head>
+<body>
+
+<th:block th:include="index"></th:block>
+
+<div class="container">
+    <h2 style="color:orange">Analytics</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Gitlab Projects</th>
+            <td th:text="${gitlabProjects}">number</td>
+        </tr>
+        <tr>
+            <th>Mattermost Posts</th>
+            <td th:text="${mattermostPosts}">number</td>
+        </tr>
+        <tr>
+            <th>Sonar Projects</th>
+            <td th:text="${sonarProjects}">number</td>
+            <th>Sonar Issues</th>
+            <td th:text="${sonarIssues}">number</td>
+        </tr>
+        <tr>
+            <th>Rundeck Projects</th>
+            <td th:text="${rundeckProjects}">number</td>
+            <th>Rundeck Jobs</th>
+            <td th:text="${rundeckJobs}">number</td>
+        </tr>
+        <tr>
+            <th>Jenkins Jobs</th>
+            <td th:text="${jenkinsJobs}">number</td>
+        </tr>
+        <tr>
+            <th>Jira Projects</th>
+            <td th:text="${jiraProjects}">number</td>
+            <th>Jira Issues</th>
+            <td th:text="${jiraIssues}">number</td>
+        </tr>
+        <tr>
+            <th>Confluence Pages</th>
+            <td th:text="${confluencePages}">number</td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

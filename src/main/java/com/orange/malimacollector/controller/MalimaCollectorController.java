@@ -75,9 +75,9 @@ public class MalimaCollectorController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String saveRegister(Model model, //
-                               @ModelAttribute("appUserForm") @Validated AppUserForm appUserForm, //
-                               BindingResult result, //
+    public String saveRegister(Model model,
+                               @ModelAttribute("appUserForm") @Validated AppUserForm appUserForm,
+                               BindingResult result,
                                final RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {

@@ -24,8 +24,12 @@
             <td th:text="${user.lastName}">Last Name</td>
         </tr>
     </table>
-    <h2 style="color:orange">Mattermost Posts</h2>
-    <table class="table table-striped">
+    <form action="#" th:action="@{/MattermostUser}" th:object="${searchTerm}" method="post">
+        <p>Search Term: <input type="text" name="searchTerm"/></p>
+        <p><button type="submit" onclick="changeVisibility()">Submit</button></p>
+    </form>
+    <h2 style="color:orange; visibility:visible" id="title">Mattermost Posts</h2>
+    <table class="table table-striped" style="visibility:visible" id="posts">
         <th:block th:each="post : ${posts}">
             <tr>
                 <th>Post Content</th>
@@ -33,6 +37,12 @@
             </tr>
         </th:block>
     </table>
+    <script>
+        function changeVisibility() {
+            document.getElementById("title").style.visibility = "hidden";
+            document.getElementById("posts").style.visibility = "hidden";
+        }
+    </script>
 </div>
 </body>
 </html>

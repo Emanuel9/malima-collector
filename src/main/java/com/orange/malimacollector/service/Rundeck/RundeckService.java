@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @Service
 public class RundeckService {
     public String buildURL(int choice){
-        String newURL = "http://wx-5cg9154hcv:4440/api/";
+        String newURL = "http://127.0.0.1:4440/api/";
         switch (choice){
             case 1:
                 newURL += "1/projects";
@@ -117,7 +117,7 @@ public class RundeckService {
         switch (choice){
             case 1:
                 URL = buildURL(1);
-                URL += "?authtoken=9c6CqKlDCvKV9r53lirH7nEM21kUXUvv";
+                URL += "?authtoken=j0m1d8Ou8WmhfAClpLOfI0rtomzzyiFc";
                 content = curlCommand(URL);
                 try {
                     return projectFromJsonString(content);
@@ -129,7 +129,7 @@ public class RundeckService {
                 Project[] projects = (Project[]) handler(1);
                 ArrayList<Job[]> jobCollection = new ArrayList<>();
                 for (Project project : projects){
-                    String newURL = URL + project.getName() + "/jobs?authtoken=9c6CqKlDCvKV9r53lirH7nEM21kUXUvv";
+                    String newURL = URL + project.getName() + "/jobs?authtoken=j0m1d8Ou8WmhfAClpLOfI0rtomzzyiFc";
                     content = curlCommand(newURL);
                     try {
                         jobCollection.add(jobFromJsonString(content));

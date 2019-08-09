@@ -1,4 +1,4 @@
-package com.orange.malimacollector.entities;
+package com.orange.malimacollector.entities.LoginEntities;
 
 import javax.persistence.*;
 

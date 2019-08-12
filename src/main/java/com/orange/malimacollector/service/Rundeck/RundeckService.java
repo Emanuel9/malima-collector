@@ -117,7 +117,7 @@ public class RundeckService {
         switch (choice){
             case 1:
                 URL = buildURL(1);
-                URL += "?authtoken=j0m1d8Ou8WmhfAClpLOfI0rtomzzyiFc";
+                URL += "?authtoken=4rMxKrearN1Ns2g132gon3IUcmkmgRuA";
                 content = curlCommand(URL);
                 try {
                     return projectFromJsonString(content);
@@ -129,7 +129,7 @@ public class RundeckService {
                 Project[] projects = (Project[]) handler(1);
                 ArrayList<Job[]> jobCollection = new ArrayList<>();
                 for (Project project : projects){
-                    String newURL = URL + project.getName() + "/jobs?authtoken=j0m1d8Ou8WmhfAClpLOfI0rtomzzyiFc";
+                    String newURL = URL + project.getName() + "/jobs?authtoken=4rMxKrearN1Ns2g132gon3IUcmkmgRuA";
                     content = curlCommand(newURL);
                     try {
                         jobCollection.add(jobFromJsonString(content));

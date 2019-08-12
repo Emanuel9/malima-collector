@@ -6,31 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 </head>
+
+<style>
+  .dottrue {
+    height: 25px;
+    width: 25px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dotfalse {
+    height: 25px;
+    width: 25px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+  }
+</style>
+
 <body>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" th:href="@{/}">MalimaCollector</a>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/project}">Gitlab Information</a>
+            <a th:if="${gitlab}" class="nav-link" th:href="@{/project}"><span class="dottrue"/> Gitlab Information</a>
+            <a th:unless="${gitlab}" class="nav-link" th:href="@{/project}"><span class="dotfalse"/> Gitlab Information</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/MattermostUser}">Mattermost Information</a>
+            <a th:if="${mattermost}" class="nav-link" th:href="@{/MattermostUser}"><span class="dottrue"/> Mattermost Information</a>
+            <a th:unless="${mattermost}" class="nav-link" th:href="@{/MattermostUser}"><span class="dotfalse"/> Mattermost Information</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/sonar}">Sonar Information</a>
+            <a th:if="${sonar}" class="nav-link" th:href="@{/sonar}"><span class="dottrue"/> Sonar Information</a>
+            <a th:unless="${sonar}" class="nav-link" th:href="@{/sonar}"><span class="dotfalse"/> Sonar Information</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/rundeck}">Rundeck Information</a>
+            <a th:if="${rundeck}" class="nav-link" th:href="@{/rundeck}"><span class="dottrue"/> Rundeck Information</a>
+            <a th:unless="${rundeck}" class="nav-link" th:href="@{/rundeck}"><span class="dotfalse"/> Rundeck Information</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/jenkins}">Jenkins Information</a>
+            <a th:if="${jenkins}" class="nav-link" th:href="@{/jenkins}"><span class="dottrue"/> Jenkins Information</a>
+            <a th:unless="${jenkins}" class="nav-link" th:href="@{/jenkins}"><span class="dotfalse"/> Jenkins Information</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/jira}">Jira Information</a>
+            <a th:if="${jira}" class="nav-link" th:href="@{/jira}"><span class="dottrue"/> Jira Information</a>
+            <a th:unless="${jira}" class="nav-link" th:href="@{/jira}"><span class="dotfalse"/> Jira Information</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/confluence}">Confluence Information</a>
+            <a th:if="${confluence}" class="nav-link" th:href="@{/confluence}"><span class="dottrue"/> Confluence Information</a>
+            <a th:unless="${confluence}" class="nav-link" th:href="@{/confluence}"><span class="dotfalse"/> Confluence Information</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" th:href="@{/analytics}">Analytics</a>

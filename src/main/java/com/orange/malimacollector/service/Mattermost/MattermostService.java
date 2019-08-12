@@ -41,7 +41,7 @@ public class MattermostService {
     }
 
     public String curlInitializeLogin(){
-        String command = "curl -i -d \"{\\\"login_id\\\":\\\"alexm\\\",\\\"password\\\":\\\"AlexMaic97\\\"}\" http://localhost:8065/api/v4/users/login";
+        String command = "curl -i -d \"{\\\"login_id\\\":\\\"alexm\\\",\\\"password\\\":\\\"mz-789\\\"}\" http://localhost:8065/api/v4/users/login";
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
         processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
         try {

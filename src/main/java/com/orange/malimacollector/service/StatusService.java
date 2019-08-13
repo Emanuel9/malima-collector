@@ -1,14 +1,31 @@
 package com.orange.malimacollector.service;
 
+import com.orange.malimacollector.entities.Status;
+import com.orange.malimacollector.repositories.StatusRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Optional;
 
 @Component
 public class StatusService {
+    @Autowired
+    StatusRepository statusRepository;
+
+    public Status saveStatus(Status status){
+        Optional<Status> statusOptional = statusRepository.findByWebsiteAddress(status.getWebsiteAddress());
+        if (statusOptional.isPresent()){
+            return statusOptional.get();
+        }
+        status.setRunning(isAccessible(status.getWebsiteAddress()) ? "true" : "false");
+        status = statusRepository.saveAndFlush(status);
+        return status;
+    }
+
     public static boolean isAccessible(String url) {
         url = url.replaceFirst("https", "http");
 
@@ -19,7 +36,6 @@ public class StatusService {
             connection.setReadTimeout(60 * 1000);
             connection.setRequestMethod("HEAD");
             int responseCode = connection.getResponseCode();
-//            System.out.println("response code " + responseCode);
             if (responseCode != 200) {
                 return false;
             }
@@ -31,50 +47,43 @@ public class StatusService {
 
     @Scheduled(fixedRate = 1000)
     public boolean confluenceCheck(){
-//        System.out.println("confluence");
-//        System.out.println(isAccessible("http://localhost:8100"));
-        return isAccessible("http://localhost:8100");
+        Status status = new Status("http://localhost:8100");
+        return saveStatus(status).isRunning().equals("true");
     }
 
     @Scheduled(fixedRate = 1000)
     public boolean gitlabCheck(){
-//        System.out.println("gitlab");
-//        System.out.println(isAccessible("http://gitlab.com"));
-        return isAccessible("http://gitlab.com");
+        Status status = new Status("http://gitlab.com");
+        return saveStatus(status).isRunning().equals("true");
     }
 
     @Scheduled(fixedRate = 1000)
     public boolean jenkinsCheck(){
-//        System.out.println("jenkins");
-//        System.out.println(isAccessible("http://localhost:8080"));
-        return isAccessible("http://localhost:8080");
+        Status status = new Status("http://localhost:8080");
+        return saveStatus(status).isRunning().equals("true");
     }
 
     @Scheduled(fixedRate = 1000)
     public boolean jiraCheck(){
-//        System.out.println("jira");
-//        System.out.println(isAccessible("http://localhost:8090"));
-        return isAccessible("http://localhost:8090");
+        Status status = new Status("http://localhost:8090");
+        return saveStatus(status).isRunning().equals("true");
     }
 
     @Scheduled(fixedRate = 1000)
     public boolean mattermostCheck(){
-//        System.out.println("mattermost");
-//        System.out.println(isAccessible("http://localhost:8065"));
-        return isAccessible("http://localhost:8065");
+        Status status = new Status("http://localhost:8065");
+        return saveStatus(status).isRunning().equals("true");
     }
 
     @Scheduled(fixedRate = 1000)
     public boolean rundeckCheck(){
-//        System.out.println("rundeck");
-//        System.out.println(isAccessible("http://localhost:4440"));
-        return isAccessible("http://localhost:4440");
+        Status status = new Status("http://localhost:4440");
+        return saveStatus(status).isRunning().equals("true");
     }
 
     @Scheduled(fixedRate = 1000)
     public boolean sonarCheck(){
-//        System.out.println("sonar");
-//        System.out.println(isAccessible("http://localhost:9000"));
-        return isAccessible("http://localhost:9000");
+        Status status = new Status("http://localhost:9000");
+        return saveStatus(status).isRunning().equals("true");
     }
 }

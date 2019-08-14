@@ -129,11 +129,6 @@ public class MalimaCollectorController {
         return "userInfoPage";
     }
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String indexPage(){
-        return "index";
-    }
-
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
 

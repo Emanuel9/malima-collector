@@ -8,21 +8,11 @@
 </head>
 
 <style>
-<!--  .element {-->
-<!--    shape-outside: circle(50%);-->
-<!--    height: 25px;-->
-<!--    width: 25px;-->
-<!--    background-color: green;-->
-<!--    border-radius: 50%;-->
-<!--    float: left;-->
-<!--  }-->
-  .element {
-    -webkit-shape-outside: circle(50%);
-    height: 25px;
-    width: 25px;
-    background-color: red;
-    border-radius: 50%;
-    float: left;
+  .true {
+    color: green;
+  }
+  .false {
+    color: red;
   }
 </style>
 
@@ -32,32 +22,32 @@
     <a class="navbar-brand" th:href="@{/}">MalimaCollector</a>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <div th:if="${gitlab == 'true'}"><div class="element"/><a class="nav-link" th:href="@{/project}"> Gitlab Information</a></div>
-            <div th:unless="${gitlab == 'true'}"><div class="element"/><a class="nav-link" th:href="@{/project}"> Gitlab Information</a></div>
+            <a th:if="${gitlab == 'true'}" class="nav-link" th:href="@{/project}"><div class="true"> Gitlab</div></a>
+            <a th:unless="${gitlab == 'true'}" class="nav-link" th:href="@{/project}"><div class="false"> Gitlab</div></a>
         </li>
         <li class="nav-item">
-            <a th:if="${mattermost == 'true'}" class="nav-link" th:href="@{/MattermostUser}"><div class="element"/> Mattermost Information</a>
-            <a th:unless="${mattermost == 'true'}" class="nav-link" th:href="@{/MattermostUser}"><div class="element"/> Mattermost Information</a>
+            <a th:if="${mattermost == 'true'}" class="nav-link" th:href="@{/MattermostUser}"><div class="true"> Mattermost</div></a>
+            <a th:unless="${mattermost == 'true'}" class="nav-link" th:href="@{/MattermostUser}"><div class="false"> Mattermost</div></a>
         </li>
         <li class="nav-item">
-            <a th:if="${sonar == 'true'}" class="nav-link" th:href="@{/sonar}"><span class="element"/> Sonar Information</a>
-            <a th:unless="${sonar == 'true'}" class="nav-link" th:href="@{/sonar}"><span class="element"/> Sonar Information</a>
+            <a th:if="${sonar == 'true'}" class="nav-link" th:href="@{/sonar}"><div class="true"> Sonar</div></a>
+            <a th:unless="${sonar == 'true'}" class="nav-link" th:href="@{/sonar}"><div class="false"> Sonar</div></a>
         </li>
         <li class="nav-item">
-            <a th:if="${rundeck == 'true'}" class="nav-link" th:href="@{/rundeck}"><span class="element"/> Rundeck Information</a>
-            <a th:unless="${rundeck == 'true'}" class="nav-link" th:href="@{/rundeck}"><span class="element"/> Rundeck Information</a>
+            <a th:if="${rundeck == 'true'}" class="nav-link" th:href="@{/rundeck}"><div class="true"> Rundeck</div></a>
+            <a th:unless="${rundeck == 'true'}" class="nav-link" th:href="@{/rundeck}"><div class="false"> Rundeck</div></a>
         </li>
         <li class="nav-item">
-            <a th:if="${jenkins == 'true'}" class="nav-link" th:href="@{/jenkins}"><span class="element"/> Jenkins Information</a>
-            <a th:unless="${jenkins == 'true'}" class="nav-link" th:href="@{/jenkins}"><span class="element"/> Jenkins Information</a>
+            <a th:if="${jenkins == 'true'}" class="nav-link" th:href="@{/jenkins}"><div class="true"> Jenkins</div></a>
+            <a th:unless="${jenkins == 'true'}" class="nav-link" th:href="@{/jenkins}"><div class="false"> Jenkins</div></a>
         </li>
         <li class="nav-item">
-            <a th:if="${jira == 'true'}" class="nav-link" th:href="@{/jira}"><span class="element"/> Jira Information</a>
-            <a th:unless="${jira == 'true'}" class="nav-link" th:href="@{/jira}"><span class="element"/> Jira Information</a>
+            <a th:if="${jira == 'true'}" class="nav-link" th:href="@{/jira}"><div class="true"> Jira</div></a>
+            <a th:unless="${jira == 'true'}" class="nav-link" th:href="@{/jira}"><div class="false"> Jira</div></a>
         </li>
         <li class="nav-item">
-            <a th:if="${confluence == 'true'}" class="nav-link" th:href="@{/confluence}"><span class="element"/> Confluence Information</a>
-            <a th:unless="${confluence == 'true'}" class="nav-link" th:href="@{/confluence}"><span class="element"/> Confluence Information</a>
+            <a th:if="${confluence == 'true'}" class="nav-link" th:href="@{/confluence}"><div class="true"> Confluence</div></a>
+            <a th:unless="${confluence == 'true'}" class="nav-link" th:href="@{/confluence}"><div class="false"> Confluence</div></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" th:href="@{/analytics}">Analytics</a>

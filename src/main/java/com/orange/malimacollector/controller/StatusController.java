@@ -12,7 +12,7 @@ public class StatusController {
     @Autowired
     StatusRepository statusRepository;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/status")
+    @RequestMapping(method = RequestMethod.GET, value = "/index")
     public String checkStatus(Model model){
         model.addAttribute("confluence", statusRepository.findByWebsiteAddress("http://localhost:8100").get().isRunning());
         model.addAttribute("gitlab", statusRepository.findByWebsiteAddress("http://gitlab.com").get().isRunning());

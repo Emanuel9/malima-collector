@@ -16,6 +16,9 @@ public class Status {
     @Column(name="Running", nullable = false)
     private String isRunning;
 
+    @Transient
+    private String command;
+
     public Status() {
     }
 
@@ -45,5 +48,13 @@ public class Status {
 
     public void setRunning(String running) {
         isRunning = running;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
 }

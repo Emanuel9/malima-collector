@@ -121,7 +121,7 @@ public class StatusService {
     @Scheduled(fixedRate = 1000)
     public boolean rundeckCheck(){
         Status status = new Status("http://localhost:4440");
-        status.setCommand("curl -i http://localhost:4440");
+        status.setCommand("curl -i http://localhost:4440/user/login");
         return saveStatus(status).isRunning().equals("true");
     }
 

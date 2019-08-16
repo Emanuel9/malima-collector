@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
     <title>Jira</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
 
-<th:block th:include="index"></th:block>
+<nav id="navigation"></nav>
+
+<script>
+    $(document).ready(function () {
+        getContent();
+        function getContent() {
+            $('#navigation').load("/index");
+        }
+    })
+</script>
 
 <div class="container">
     <h2 style="color:orange">Projects</h2>

@@ -10,6 +10,9 @@ public class Status {
     @Column(name="Website_ID", nullable = false)
     private Long websiteID;
 
+    @Column(name="Website_Name", nullable = false)
+    private String websiteName;
+
     @Column(name="Website_Address", nullable = false, unique = true)
     private String websiteAddress;
 
@@ -22,8 +25,9 @@ public class Status {
     public Status() {
     }
 
-    public Status(String websiteAddress) {
+    public Status(String websiteAddress, String websiteName) {
         this.websiteAddress = websiteAddress;
+        this.websiteName = websiteName;
     }
 
     public Long getWebsiteID() {
@@ -56,5 +60,13 @@ public class Status {
 
     public void setCommand(String command) {
         this.command = command;
+    }
+
+    public String getWebsiteName() {
+        return websiteName;
+    }
+
+    public void setWebsiteName(String websiteName) {
+        this.websiteName = websiteName;
     }
 }

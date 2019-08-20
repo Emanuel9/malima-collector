@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.JenkinsEntities.JenkinsInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -15,8 +17,11 @@ import java.nio.file.Paths;
 
 @Service
 public class JenkinsService {
+    @Autowired
+    private MachineConfiguration config;
+
     public String buildURL(int choice){
-        String newURL = "http://localhost:8080/";
+        String newURL = this.config.getWebsites()[2].getLocalAddress();
         switch (choice){
             case 1:
                 newURL += "api/json?pretty=true";
@@ -29,7 +34,8 @@ public class JenkinsService {
     }
 
     public String curlCommand(String URL) {
-        String command = "curl -u alexm:admin " + URL;
+        String command = "curl -u " + this.config.getWebsites()[2].getAdminUsername()
+                        + ":" + this.config.getWebsites()[2].getAdminPassword() + " " + URL;
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
         processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
         try {

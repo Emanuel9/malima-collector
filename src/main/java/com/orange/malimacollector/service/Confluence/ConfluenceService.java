@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.ConfluenceEntities.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -15,8 +17,11 @@ import java.nio.file.Paths;
 
 @Service
 public class ConfluenceService {
+    @Autowired
+    private MachineConfiguration config;
+
     public String buildURL(int choice){
-        String newURL = "http://localhost:8100/rest/api/content";
+        String newURL = this.config.getWebsites()[0].getLocalAddress();
         switch(choice){
             case 1:
                 newURL += "/search";
@@ -31,7 +36,8 @@ public class ConfluenceService {
     public String curlCommands(String URL){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
-                .append("curl -u alexm:admin -G \"")
+                .append("curl -u ").append(this.config.getWebsites()[0].getAdminUsername())
+                .append(":").append(this.config.getWebsites()[0].getAdminPassword()).append(" -G \"")
                 .append(URL)
                 .append("\" --data-urlencode \"cql=(type=page and space=ds)\"");
         String command = stringBuilder.toString();

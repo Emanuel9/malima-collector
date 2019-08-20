@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.GitlabEntities.GitLabParameters;
 import com.orange.malimacollector.entities.GitlabEntities.Group;
 import com.orange.malimacollector.entities.GitlabEntities.Project;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.orange.malimacollector.service.URLService;
 
@@ -14,6 +16,9 @@ import java.io.IOException;
 
 @Service
 public class GitlabService {
+    @Autowired
+    private MachineConfiguration config;
+
     private GitLabParameters parameters = new GitLabParameters(true, false, false, true);
 
     public GitLabParameters getParameters() {
@@ -25,7 +30,7 @@ public class GitlabService {
     }
 
     public String buildURL(String privateToken, String ID){
-        String newURL = "https://gitlab.com/api/v4/";
+        String newURL = this.config.getWebsites()[1].getLocalAddress();
         String modifier;
         if (parameters.isGroup()){
             modifier = "groups/";
@@ -95,7 +100,7 @@ public class GitlabService {
     }
 
     public Project[] handler(){
-        String URL = buildURL("8aHcnAb8eVSjauuSkQj7","4278148");
+        String URL = buildURL(this.config.getWebsites()[1].getAdminPassword(),this.config.getWebsites()[1].getAdminUsername());
         String content = new URLService().callURL(URL);
             try {
                 return projectFromJsonString(content);

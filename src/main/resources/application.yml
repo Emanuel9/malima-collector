@@ -12,3 +12,34 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+address:
+  websites:
+    - websiteName: Confluence
+      localAddress: http://localhost:8100/rest/api/content
+      adminUsername: alexm
+      adminPassword: admin
+    - websiteName: Gitlab
+      localAddress: https://gitlab.com/api/v4/users/4278148/projects?private_token=8aHcnAb8eVSjauuSkQj7
+      adminUsername: 4278148
+      adminPassword: 8aHcnAb8eVSjauuSkQj7
+    - websiteName: Jenkins
+      localAddress: http://localhost:8080/
+      adminUsername: alexm
+      adminPassword: admin
+    - websiteName: Jira
+      localAddress: http://localhost:8090/rest/api/2/
+      adminUsername: alexm
+      adminPassword: admin
+    - websiteName: Mattermost
+      localAddress: http://localhost:8065/api/v4/
+      adminUsername: alexm
+      adminPassword: mz-789
+    - websiteName: Rundeck
+      localAddress: http://127.0.0.1:4440/api/
+      adminUsername: alexm
+      adminPassword: 4rMxKrearN1Ns2g132gon3IUcmkmgRuA
+    - websiteName: Sonar
+      localAddress: http://localhost:9000/api/
+      adminUsername: admin
+      adminPassword: admin

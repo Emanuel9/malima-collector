@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.MattermostEntities.Channel;
 import com.orange.malimacollector.entities.MattermostEntities.PostList;
 import com.orange.malimacollector.entities.MattermostEntities.Teams;
 import com.orange.malimacollector.entities.MattermostEntities.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -22,8 +24,11 @@ import java.util.Map;
 
 @Service
 public class MattermostService {
+    @Autowired
+    private MachineConfiguration config;
+
     public String buildURL(int choice){
-        String newURL = "http://localhost:8065/api/v4/";
+        String newURL = this.config.getWebsites()[4].getLocalAddress();
         switch (choice){
             case 1:
                 newURL += "users/me";
@@ -41,7 +46,9 @@ public class MattermostService {
     }
 
     public String curlInitializeLogin(){
-        String command = "curl -i -d \"{\\\"login_id\\\":\\\"alexm\\\",\\\"password\\\":\\\"mz-789\\\"}\" http://localhost:8065/api/v4/users/login";
+        String command = "curl -i -d \"{\\\"login_id\\\":\\\"" + this.config.getWebsites()[4].getAdminUsername() +
+                "\\\",\\\"password\\\":\\\""+ this.config.getWebsites()[4].getAdminPassword() +
+                "\\\"}\" " + this.config.getWebsites()[4].getLocalAddress();
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
         processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
         try {

@@ -14,26 +14,26 @@ public class StatusController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/index")
     public String checkStatus(Model model){
-        if (statusRepository.findByWebsiteAddress("http://localhost:8100").isPresent()) {
-            model.addAttribute("confluence", statusRepository.findByWebsiteAddress("http://localhost:8100").get().isRunning());
+        if (statusRepository.findByWebsiteAddress("http://localhost:8100") != null) {
+            model.addAttribute("confluence", statusRepository.findByWebsiteAddress("http://localhost:8100").isRunning());
         }
-        if(statusRepository.findByWebsiteAddress("http://gitlab.com").isPresent()) {
-            model.addAttribute("gitlab", statusRepository.findByWebsiteAddress("http://gitlab.com").get().isRunning());
+        if(statusRepository.findByWebsiteAddress("http://gitlab.com") != null) {
+            model.addAttribute("gitlab", statusRepository.findByWebsiteAddress("http://gitlab.com").isRunning());
         }
-        if (statusRepository.findByWebsiteAddress("http://localhost:8080").isPresent()) {
-            model.addAttribute("jenkins", statusRepository.findByWebsiteAddress("http://localhost:8080").get().isRunning());
+        if (statusRepository.findByWebsiteAddress("http://localhost:8080") != null) {
+            model.addAttribute("jenkins", statusRepository.findByWebsiteAddress("http://localhost:8080").isRunning());
         }
-        if (statusRepository.findByWebsiteAddress("http://localhost:8090").isPresent()) {
-            model.addAttribute("jira", statusRepository.findByWebsiteAddress("http://localhost:8090").get().isRunning());
+        if (statusRepository.findByWebsiteAddress("http://localhost:8090") != null) {
+            model.addAttribute("jira", statusRepository.findByWebsiteAddress("http://localhost:8090").isRunning());
         }
-        if (statusRepository.findByWebsiteAddress("http://localhost:8065").isPresent()) {
-            model.addAttribute("mattermost", statusRepository.findByWebsiteAddress("http://localhost:8065").get().isRunning());
+        if (statusRepository.findByWebsiteAddress("http://localhost:8065") != null) {
+            model.addAttribute("mattermost", statusRepository.findByWebsiteAddress("http://localhost:8065").isRunning());
         }
-        if(statusRepository.findByWebsiteAddress("http://localhost:4440").isPresent()) {
-            model.addAttribute("rundeck", statusRepository.findByWebsiteAddress("http://localhost:4440").get().isRunning());
+        if(statusRepository.findByWebsiteAddress("http://localhost:4440") != null) {
+            model.addAttribute("rundeck", statusRepository.findByWebsiteAddress("http://localhost:4440").isRunning());
         }
-        if(statusRepository.findByWebsiteAddress("http://localhost:9000").isPresent()) {
-            model.addAttribute("sonar", statusRepository.findByWebsiteAddress("http://localhost:9000").get().isRunning());
+        if(statusRepository.findByWebsiteAddress("http://localhost:9000") != null) {
+            model.addAttribute("sonar", statusRepository.findByWebsiteAddress("http://localhost:9000").isRunning());
         }
         return "index";
     }

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.orange.malimacollector.entities.SonarEntities.Project;
+import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.SonarEntities.Issue;
+import com.orange.malimacollector.entities.SonarEntities.Project;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -16,8 +18,11 @@ import java.nio.file.Paths;
 
 @Service
 public class SonarService {
+    @Autowired
+    private MachineConfiguration config;
+
     public String buildURL(int choice){
-        String newURL = "http://localhost:9000/api/";
+        String newURL = this.config.getWebsites()[6].getLocalAddress();
         switch (choice){
             case 1:
                 newURL += "issues/search";
@@ -30,7 +35,8 @@ public class SonarService {
     }
 
     public String curlCommand(String URL) {
-        String command = "curl -u admin:admin " + URL;
+        String command = "curl -u " + this.config.getWebsites()[6].getAdminUsername() + ":" +
+                this.config.getWebsites()[6].getAdminPassword() + " " + URL;
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
         processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
         try {

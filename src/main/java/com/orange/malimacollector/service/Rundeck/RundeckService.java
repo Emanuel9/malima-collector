@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.RundeckEntities.Job;
 import com.orange.malimacollector.entities.RundeckEntities.Project;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -17,8 +19,11 @@ import java.util.ArrayList;
 
 @Service
 public class RundeckService {
+    @Autowired
+    private MachineConfiguration config;
+
     public String buildURL(int choice){
-        String newURL = "http://127.0.0.1:4440/api/";
+        String newURL = this.config.getWebsites()[5].getLocalAddress();
         switch (choice){
             case 1:
                 newURL += "1/projects";
@@ -27,7 +32,6 @@ public class RundeckService {
                 newURL += "14/project/";
                 break;
         }
-//        newURL += "?authtoken=9c6CqKlDCvKV9r53lirH7nEM21kUXUvv";
         return newURL;
     }
 
@@ -117,7 +121,7 @@ public class RundeckService {
         switch (choice){
             case 1:
                 URL = buildURL(1);
-                URL += "?authtoken=4rMxKrearN1Ns2g132gon3IUcmkmgRuA";
+                URL += ("?authtoken=" + this.config.getWebsites()[5].getAdminPassword());
                 content = curlCommand(URL);
                 try {
                     return projectFromJsonString(content);
@@ -129,7 +133,7 @@ public class RundeckService {
                 Project[] projects = (Project[]) handler(1);
                 ArrayList<Job[]> jobCollection = new ArrayList<>();
                 for (Project project : projects){
-                    String newURL = URL + project.getName() + "/jobs?authtoken=4rMxKrearN1Ns2g132gon3IUcmkmgRuA";
+                    String newURL = URL + project.getName() + "/jobs??authtoken=" + this.config.getWebsites()[5].getAdminPassword();
                     content = curlCommand(newURL);
                     try {
                         jobCollection.add(jobFromJsonString(content));

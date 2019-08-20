@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.JiraEntities.Issue;
 import com.orange.malimacollector.entities.JiraEntities.Project;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -17,8 +19,11 @@ import java.util.ArrayList;
 
 @Service
 public class JiraService {
+    @Autowired
+    private MachineConfiguration config;
+
     public String buildURL(int choice){
-        String newURL = "http://localhost:8090/rest/api/2/";
+        String newURL = this.config.getWebsites()[3].getLocalAddress();
         switch (choice){
             case 1:
                 newURL += "search";
@@ -32,7 +37,9 @@ public class JiraService {
     public String curlCommands(String projectName, String URL){
         StringBuilder stringBuilder = new StringBuilder();
             stringBuilder
-                    .append("curl -u alexm:admin -X POST ")
+                    .append("curl -u ").append(this.config.getWebsites()[3].getAdminUsername())
+                    .append(":").append(this.config.getWebsites()[3].getAdminPassword())
+                    .append(" -X POST ")
                     .append("-H \"Content-Type: application/json\" ")
                     .append("--data \"{\\\"jql\\\":\\\"project =")
                     .append(projectName)
@@ -65,7 +72,8 @@ public class JiraService {
     }
 
     public String curlCommands(String URL){
-        String command = "curl -u alexm:admin " + URL;
+        String command = "curl -u " + this.config.getWebsites()[2].getAdminUsername()
+                + ":" + this.config.getWebsites()[2].getAdminPassword() + " " + URL;
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
         processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
         try {

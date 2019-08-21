@@ -133,7 +133,7 @@ public class RundeckService {
                 Project[] projects = (Project[]) handler(1);
                 ArrayList<Job[]> jobCollection = new ArrayList<>();
                 for (Project project : projects){
-                    String newURL = URL + project.getName() + "/jobs??authtoken=" + this.config.getWebsites()[5].getAdminPassword();
+                    String newURL = URL + project.getName() + "/jobs?authtoken=" + this.config.getWebsites()[5].getAdminPassword();
                     content = curlCommand(newURL);
                     try {
                         jobCollection.add(jobFromJsonString(content));

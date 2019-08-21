@@ -48,7 +48,7 @@ public class MattermostService {
     public String curlInitializeLogin(){
         String command = "curl -i -d \"{\\\"login_id\\\":\\\"" + this.config.getWebsites()[4].getAdminUsername() +
                 "\\\",\\\"password\\\":\\\""+ this.config.getWebsites()[4].getAdminPassword() +
-                "\\\"}\" " + this.config.getWebsites()[4].getLocalAddress();
+                "\\\"}\" " + this.config.getWebsites()[4].getLocalAddress() + "users/login";
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
         processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
         try {

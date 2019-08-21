@@ -20,7 +20,7 @@ address:
       adminUsername: alexm
       adminPassword: admin
     - websiteName: Gitlab
-      localAddress: https://gitlab.com/api/v4/users/4278148/projects?private_token=8aHcnAb8eVSjauuSkQj7
+      localAddress: https://gitlab.com/api/v4/
       adminUsername: 4278148
       adminPassword: 8aHcnAb8eVSjauuSkQj7
     - websiteName: Jenkins
@@ -36,7 +36,7 @@ address:
       adminUsername: alexm
       adminPassword: mz-789
     - websiteName: Rundeck
-      localAddress: http://127.0.0.1:4440/api/
+      localAddress: http://127.0.0.1:4440/
       adminUsername: alexm
       adminPassword: 4rMxKrearN1Ns2g132gon3IUcmkmgRuA
     - websiteName: Sonar

@@ -1,5 +1,6 @@
 package com.orange.malimacollector.service;
 
+import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.Status;
 import com.orange.malimacollector.repositories.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import java.nio.file.Paths;
 public class StatusService {
     @Autowired
     StatusRepository statusRepository;
+
+    @Autowired
+    MachineConfiguration config;
 
     public void saveStatus(Status status){
         Status statusOptional = statusRepository.findByWebsiteAddress(status.getWebsiteAddress());
@@ -64,50 +68,59 @@ public class StatusService {
 
     @Scheduled(fixedRate = 1000)
     public void confluenceCheck(){
-        Status status = new Status("http://localhost:8100", "Confluence");
-        status.setCommand("curl -i -u alexm:admin -G \"http://localhost:8100/rest/api/content/search\" --data-urlencode \"cql=(type=page and space=ds)\"");
+        Status status = new Status(this.config.getWebsites()[0].getLocalAddress(), this.config.getWebsites()[0].getWebsiteName());
+        status.setCommand("curl -i -u " + this.config.getWebsites()[0].getAdminUsername() + ":" +
+                 this.config.getWebsites()[0].getAdminPassword() + " -G \""+ this.config.getWebsites()[0].getLocalAddress()
+                + "/search\" --data-urlencode \"cql=(type=page and space=ds)\"");
         saveStatus(status);
     }
 
     @Scheduled(fixedRate = 1000)
     public void gitlabCheck(){
-        Status status = new Status("http://gitlab.com", "Gitlab");
-        status.setCommand("curl -i https://gitlab.com/api/v4/users/4278148/projects?private_token=8aHcnAb8eVSjauuSkQj7");
+        Status status = new Status(this.config.getWebsites()[1].getLocalAddress(), this.config.getWebsites()[1].getWebsiteName());
+        status.setCommand("curl -i " + this.config.getWebsites()[1].getLocalAddress() + "users/" + this.config.getWebsites()[1].getAdminUsername() +
+                        "/projects?private_token=" + this.config.getWebsites()[1].getAdminPassword());
         saveStatus(status);
     }
 
     @Scheduled(fixedRate = 1000)
     public void jenkinsCheck(){
-        Status status = new Status("http://localhost:8080", "Jenkins");
-        status.setCommand("curl -i -u alexm:admin http://localhost:8080/api/json?pretty=true");
+        Status status = new Status(this.config.getWebsites()[2].getLocalAddress(), this.config.getWebsites()[2].getWebsiteName());
+        status.setCommand("curl -i -u " + this.config.getWebsites()[2].getAdminUsername() + ":" +
+                this.config.getWebsites()[2].getAdminPassword() + " " +
+                this.config.getWebsites()[2].getLocalAddress() + "api/json?pretty=true");
         saveStatus(status);
     }
 
     @Scheduled(fixedRate = 1000)
     public void jiraCheck(){
-        Status status = new Status("http://localhost:8090", "Jira");
-        status.setCommand("curl -i -u alexm:admin http://localhost:8090/rest/api/2/project");
+        Status status = new Status(this.config.getWebsites()[3].getLocalAddress(), this.config.getWebsites()[3].getWebsiteName());
+        status.setCommand("curl -i -u " + this.config.getWebsites()[3].getAdminUsername() + ":" +
+                this.config.getWebsites()[3].getAdminPassword() + " " + this.config.getWebsites()[3].getLocalAddress() + "project");
         saveStatus(status);
     }
 
     @Scheduled(fixedRate = 1000)
     public void mattermostCheck(){
-        Status status = new Status("http://localhost:8065", "Mattermost");
-        status.setCommand("curl -i -d \"{\\\"login_id\\\":\\\"alexm\\\",\\\"password\\\":\\\"mz-789\\\"}\" http://localhost:8065/api/v4/users/login");
+        Status status = new Status(this.config.getWebsites()[4].getLocalAddress(), this.config.getWebsites()[4].getWebsiteName());
+        status.setCommand("curl -i -d \"{\\\"login_id\\\":\\\"" + this.config.getWebsites()[4].getAdminUsername() +
+                "\\\",\\\"password\\\":\\\"" + this.config.getWebsites()[4].getAdminPassword() + "\\\"}\" " +
+                this.config.getWebsites()[4].getLocalAddress() + "users/login");
         saveStatus(status);
     }
 
     @Scheduled(fixedRate = 1000)
     public void rundeckCheck(){
-        Status status = new Status("http://localhost:4440", "Rundeck");
-        status.setCommand("curl -i http://localhost:4440/user/login");
+        Status status = new Status(this.config.getWebsites()[5].getLocalAddress(), this.config.getWebsites()[5].getWebsiteName());
+        status.setCommand("curl -i " + this.config.getWebsites()[5].getLocalAddress() + "user/login");
         saveStatus(status);
     }
 
     @Scheduled(fixedRate = 1000)
     public void sonarCheck(){
-        Status status = new Status("http://localhost:9000", "Sonar");
-        status.setCommand("curl -i -u admin:admin http://localhost:9000/api/server");
+        Status status = new Status(this.config.getWebsites()[6].getLocalAddress(), this.config.getWebsites()[6].getWebsiteName());
+        status.setCommand("curl -i -u " + this.config.getWebsites()[6].getAdminUsername() + ":" +
+                this.config.getWebsites()[6].getAdminPassword() + " " + this.config.getWebsites()[6].getLocalAddress() + "server");
         saveStatus(status);
     }
 }

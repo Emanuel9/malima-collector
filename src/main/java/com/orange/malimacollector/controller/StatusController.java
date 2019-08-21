@@ -1,5 +1,6 @@
 package com.orange.malimacollector.controller;
 
+import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.repositories.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,28 +13,31 @@ public class StatusController {
     @Autowired
     StatusRepository statusRepository;
 
+    @Autowired
+    MachineConfiguration config;
+
     @RequestMapping(method = RequestMethod.GET, value = "/index")
     public String checkStatus(Model model){
-        if (statusRepository.findByWebsiteAddress("http://localhost:8100") != null) {
-            model.addAttribute("confluence", statusRepository.findByWebsiteAddress("http://localhost:8100").isRunning());
+        if (statusRepository.findByWebsiteAddress(this.config.getWebsites()[0].getLocalAddress()) != null) {
+            model.addAttribute("confluence", statusRepository.findByWebsiteAddress(this.config.getWebsites()[0].getLocalAddress()).isRunning());
         }
-        if(statusRepository.findByWebsiteAddress("http://gitlab.com") != null) {
-            model.addAttribute("gitlab", statusRepository.findByWebsiteAddress("http://gitlab.com").isRunning());
+        if(statusRepository.findByWebsiteAddress(this.config.getWebsites()[1].getLocalAddress()) != null) {
+            model.addAttribute("gitlab", statusRepository.findByWebsiteAddress(this.config.getWebsites()[1].getLocalAddress()).isRunning());
         }
-        if (statusRepository.findByWebsiteAddress("http://localhost:8080") != null) {
-            model.addAttribute("jenkins", statusRepository.findByWebsiteAddress("http://localhost:8080").isRunning());
+        if (statusRepository.findByWebsiteAddress(this.config.getWebsites()[2].getLocalAddress()) != null) {
+            model.addAttribute("jenkins", statusRepository.findByWebsiteAddress(this.config.getWebsites()[2].getLocalAddress()).isRunning());
         }
-        if (statusRepository.findByWebsiteAddress("http://localhost:8090") != null) {
-            model.addAttribute("jira", statusRepository.findByWebsiteAddress("http://localhost:8090").isRunning());
+        if (statusRepository.findByWebsiteAddress(this.config.getWebsites()[3].getLocalAddress()) != null) {
+            model.addAttribute("jira", statusRepository.findByWebsiteAddress(this.config.getWebsites()[3].getLocalAddress()).isRunning());
         }
-        if (statusRepository.findByWebsiteAddress("http://localhost:8065") != null) {
-            model.addAttribute("mattermost", statusRepository.findByWebsiteAddress("http://localhost:8065").isRunning());
+        if (statusRepository.findByWebsiteAddress(this.config.getWebsites()[4].getLocalAddress()) != null) {
+            model.addAttribute("mattermost", statusRepository.findByWebsiteAddress(this.config.getWebsites()[4].getLocalAddress()).isRunning());
         }
-        if(statusRepository.findByWebsiteAddress("http://localhost:4440") != null) {
-            model.addAttribute("rundeck", statusRepository.findByWebsiteAddress("http://localhost:4440").isRunning());
+        if(statusRepository.findByWebsiteAddress(this.config.getWebsites()[5].getLocalAddress()) != null) {
+            model.addAttribute("rundeck", statusRepository.findByWebsiteAddress(this.config.getWebsites()[5].getLocalAddress()).isRunning());
         }
-        if(statusRepository.findByWebsiteAddress("http://localhost:9000") != null) {
-            model.addAttribute("sonar", statusRepository.findByWebsiteAddress("http://localhost:9000").isRunning());
+        if(statusRepository.findByWebsiteAddress(this.config.getWebsites()[6].getLocalAddress()) != null) {
+            model.addAttribute("sonar", statusRepository.findByWebsiteAddress(this.config.getWebsites()[6].getLocalAddress()).isRunning());
         }
         return "index";
     }

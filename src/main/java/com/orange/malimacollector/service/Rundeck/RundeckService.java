@@ -26,10 +26,10 @@ public class RundeckService {
         String newURL = this.config.getWebsites()[5].getLocalAddress();
         switch (choice){
             case 1:
-                newURL += "1/projects";
+                newURL += "api/1/projects";
                 break;
             case 2:
-                newURL += "14/project/";
+                newURL += "api/14/project/";
                 break;
         }
         return newURL;

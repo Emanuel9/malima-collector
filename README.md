@@ -35,11 +35,11 @@ Sonar:
 - display information about coding issues
 - display the status of issues
 
-###Database
+### Database
 MySQL 8
 
 ### Configuration
 application.yml
 
-###Technologies used
+### Technologies used
 Java, Spring Boot, JPA, Hibernate, MySQL, Thymeleaf

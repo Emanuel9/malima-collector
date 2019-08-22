@@ -6,49 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content="60">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/serviceLoaders.js}"></script>
 </head>
-
-<style>
-  .true {
-    color: green;
-  }
-  .false {
-    color: red;
-  }
-  .loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    width: 150px;
-    height: 150px;
-    margin: -75px 0 0 -75px;
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-</style>
 
 <body th:fragment="index">
 <span id="myElement">
 <span th:if="${gitlab==null or mattermost==null or sonar==null or rundeck==null or
                                             jenkins==null or jira==null or confluence==null}">
     <div class="loader"></div>
-    <script>
-        function timedRefresh(timeoutPeriod) {
-	        setTimeout("location.reload(true);",timeoutPeriod);
-        }
-        window.onload = timedRefresh(2000);
-    </script>
+    <script th:src="@{/js/loader.js}"></script>
 </span>
 <span th:unless="${gitlab==null or mattermost==null or sonar==null or rundeck==null or
                                             jenkins==null or jira==null or confluence==null}">
@@ -95,213 +63,24 @@
 </nav>
 </span>
     <span th:if="${gitlab == 'true'}" id="gitlab" style="display:none">
-    <script>
-    $(document).ready(function () {
-        getContent();
-        function getContent() {
-            $('#gitlab').load("/project");
-        }
-    })
-    toggleGitlab = function( ) {
-        $(document).ready(function () {
-            $('#gitlab').show();
-            $('#mattermost').hide();
-            $('#sonar').hide();
-            $('#rundeck').hide();
-            $('#jenkins').hide();
-            $('#jira').hide();
-            $('#confluence').hide();
-            $('#noService').hide();
-            $('#analytics').hide();
-        });
-    };
-    </script>
     </span>
     <span th:if="${mattermost == 'true'}" id="mattermost" style="display:none">
-    <script>
-    $(document).ready(function () {
-        getContent();
-        function getContent() {
-            $('#mattermost').load("/MattermostUser");
-        }
-    })
-    toggleMattermost = function( ) {
-        $(document).ready(function () {
-            $('#gitlab').hide();
-            $('#mattermost').show();
-            $('#sonar').hide();
-            $('#rundeck').hide();
-            $('#jenkins').hide();
-            $('#jira').hide();
-            $('#confluence').hide();
-            $('#noService').hide();
-            $('#analytics').hide();
-        });
-    };
-    </script>
     </span>
     <span th:if="${sonar == 'true'}" id="sonar" style="display:none">
-    <script>
-    $(document).ready(function () {
-        getContent();
-        function getContent() {
-            $('#sonar').load("/sonar");
-        }
-    })
-    toggleSonar = function( ) {
-        $(document).ready(function () {
-            $('#gitlab').hide();
-            $('#mattermost').hide();
-            $('#sonar').show();
-            $('#rundeck').hide();
-            $('#jenkins').hide();
-            $('#jira').hide();
-            $('#confluence').hide();
-            $('#noService').hide();
-            $('#analytics').hide();
-        });
-    };
-    </script>
     </span>
     <span th:if="${rundeck == 'true'}" id="rundeck" style="display:none">
-    <script>
-    $(document).ready(function () {
-        getContent();
-        function getContent() {
-            $('#rundeck').load("/rundeck");
-        }
-    })
-    toggleRundeck = function( ) {
-        $(document).ready(function () {
-            $('#gitlab').hide();
-            $('#mattermost').hide();
-            $('#sonar').hide();
-            $('#rundeck').show();
-            $('#jenkins').hide();
-            $('#jira').hide();
-            $('#confluence').hide();
-            $('#noService').hide();
-            $('#analytics').hide();
-        });
-    };
-    </script>
     </span>
     <span th:if="${jenkins == 'true'}" id="jenkins" style="display:none">
-    <script>
-    $(document).ready(function () {
-        getContent();
-        function getContent() {
-            $('#jenkins').load("/jenkins");
-        }
-    })
-    toggleJenkins = function( ) {
-        $(document).ready(function () {
-            $('#gitlab').hide();
-            $('#mattermost').hide();
-            $('#sonar').hide();
-            $('#rundeck').hide();
-            $('#jenkins').show();
-            $('#jira').hide();
-            $('#confluence').hide();
-            $('#noService').hide();
-            $('#analytics').hide();
-        });
-    };
-    </script>
     </span>
     <span th:if="${jira == 'true'}" id="jira" style="display:none">
-    <script>
-    $(document).ready(function () {
-        getContent();
-        function getContent() {
-            $('#jira').load("/jira");
-        }
-    })
-    toggleJira = function( ) {
-        $(document).ready(function () {
-            $('#gitlab').hide();
-            $('#mattermost').hide();
-            $('#sonar').hide();
-            $('#rundeck').hide();
-            $('#jenkins').hide();
-            $('#jira').show();
-            $('#confluence').hide();
-            $('#noService').hide();
-            $('#analytics').hide();
-        });
-    };
-    </script>
     </span>
     <span th:if="${confluence == 'true'}" id="confluence" style="display:none">
-    <script>
-    $(document).ready(function () {
-        getContent();
-        function getContent() {
-            $('#confluence').load("/confluence");
-        }
-    })
-    toggleConfluence = function( ) {
-        $(document).ready(function () {
-            $('#gitlab').hide();
-            $('#mattermost').hide();
-            $('#sonar').hide();
-            $('#rundeck').hide();
-            $('#jenkins').hide();
-            $('#jira').hide();
-            $('#confluence').show();
-            $('#noService').hide();
-            $('#analytics').hide();
-        });
-    };
-    </script>
     </span>
     <span id="noService" style="display:none">
-    <script>
-    $(document).ready(function () {
-        getContent();
-        function getContent() {
-            $('#noService').load("/noService");
-        }
-    })
-    toggleNoService = function( ) {
-        $(document).ready(function () {
-            $('#gitlab').hide();
-            $('#mattermost').hide();
-            $('#sonar').hide();
-            $('#rundeck').hide();
-            $('#jenkins').hide();
-            $('#jira').hide();
-            $('#confluence').hide();
-            $('#noService').show();
-            $('#analytics').hide();
-        });
-    };
-    </script>
     </span>
     <span th:if="${gitlab=='true' and mattermost=='true' and sonar=='true' and rundeck=='true' and
                                             jenkins=='true' and jira=='true' and confluence=='true'}"
           id="analytics" style="display:none">
-    <script>
-    $(document).ready(function () {
-        getContent();
-        function getContent() {
-            $('#analytics').load("/analytics");
-        }
-    })
-    toggleAnalytics = function( ) {
-        $(document).ready(function () {
-            $('#gitlab').hide();
-            $('#mattermost').hide();
-            $('#sonar').hide();
-            $('#rundeck').hide();
-            $('#jenkins').hide();
-            $('#jira').hide();
-            $('#confluence').hide();
-            $('#noService').hide();
-            $('#analytics').show();
-        });
-    };
-    </script>
     </span>
 </span>
 </body>

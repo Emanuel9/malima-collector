@@ -15,6 +15,7 @@ import com.orange.malimacollector.service.Jenkins.JenkinsService;
 import com.orange.malimacollector.service.Jira.JiraService;
 import com.orange.malimacollector.service.Mattermost.MattermostService;
 import com.orange.malimacollector.service.Rundeck.RundeckService;
+import com.orange.malimacollector.service.Sonar.SonarService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class ApplicationIntegrationTests {
 
     @Autowired
     private RundeckService rundeckServiceMock;
+
+    @Autowired
+    private SonarService sonarServiceMock;
 
     @Test
     public void testFetchingConfluenceData(){
@@ -108,5 +112,11 @@ public class ApplicationIntegrationTests {
             size += jobSet.length;
         }
         assertEquals(1, size);
+    }
+
+    @Test
+    public void testFetchingSonarData(){
+        assertEquals(1, ((com.orange.malimacollector.entities.SonarEntities.Project)sonarServiceMock.handler(2)).getComponents().length);
+        assertEquals(200, ((com.orange.malimacollector.entities.SonarEntities.Issue)sonarServiceMock.handler(1)).getIssues().length);
     }
 }

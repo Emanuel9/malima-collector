@@ -120,7 +120,7 @@ public class StatusService {
     public void sonarCheck(){
         Status status = new Status(this.config.getWebsites()[6].getLocalAddress(), this.config.getWebsites()[6].getWebsiteName());
         status.setCommand("curl -i -u " + this.config.getWebsites()[6].getAdminUsername() + ":" +
-                this.config.getWebsites()[6].getAdminPassword() + " " + this.config.getWebsites()[6].getLocalAddress() + "server");
+                this.config.getWebsites()[6].getAdminPassword() + " " + this.config.getWebsites()[6].getLocalAddress() + "projects/search");
         saveStatus(status);
     }
 }

@@ -116,7 +116,7 @@ public class ApplicationIntegrationTests {
 
     @Test
     public void testFetchingSonarData(){
-        assertEquals(1, ((com.orange.malimacollector.entities.SonarEntities.Project)sonarServiceMock.handler(2)).getComponents().length);
-        assertEquals(200, ((com.orange.malimacollector.entities.SonarEntities.Issue)sonarServiceMock.handler(1)).getIssues().length);
+        assertEquals(2, ((com.orange.malimacollector.entities.SonarEntities.Project)sonarServiceMock.handler(2)).getComponents().length);
+        assertEquals(100, ((com.orange.malimacollector.entities.SonarEntities.Issue)sonarServiceMock.handler(1)).getIssues().length);
     }
 }

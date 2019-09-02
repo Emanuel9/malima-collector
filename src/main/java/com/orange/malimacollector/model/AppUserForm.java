@@ -13,7 +13,7 @@ public class AppUserForm {
 
     }
 
-    public AppUserForm(Long userId, String userName, //
+    public AppUserForm(Long userId, String userName,
                         boolean enabled, String email, String password, String confirmPassword) {
         this.userId = userId;
         this.userName = userName;

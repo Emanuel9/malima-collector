@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
+
 <div class="container">
     <h2 style="color:orange">Mattermost User Information</h2>
     <table class="table table-striped">
@@ -29,7 +30,7 @@
         <p><button type="submit" onclick="changeVisibility()">Submit</button></p>
     </form>
     <h2 style="color:orange; visibility:visible" id="title">Mattermost Posts</h2>
-    <table class="table table-striped" style="visibility:visible" id="posts">
+    <table class="table table-striped" style="visibility:visible" id="posts" onload="toggleMattermost()">
         <th:block th:each="post : ${posts}">
             <tr>
                 <th>Post Content</th>
@@ -37,6 +38,7 @@
             </tr>
         </th:block>
     </table>
+    <script th:src="@{/js/serviceLoaders.js}"></script>
     <script>
         function changeVisibility() {
             document.getElementById("title").style.visibility = "hidden";

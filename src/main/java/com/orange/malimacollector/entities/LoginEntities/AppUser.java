@@ -3,8 +3,8 @@ package com.orange.malimacollector.entities.LoginEntities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "App_User", //
-        uniqueConstraints = { //
+@Table(name = "App_User",
+        uniqueConstraints = {
                 @UniqueConstraint(name = "APP_USER_UK", columnNames = "User_Name") })
 public class AppUser {
 

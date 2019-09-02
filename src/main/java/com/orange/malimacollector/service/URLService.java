@@ -11,7 +11,7 @@ public class URLService {
 
     public String callURL(String myURL) {
         StringBuilder sb = new StringBuilder();
-        URLConnection urlConn = null;
+        URLConnection urlConn;
         InputStreamReader in = null;
         try {
             URL url = new URL(myURL);
@@ -30,7 +30,9 @@ public class URLService {
                     bufferedReader.close();
                 }
             }
-            in.close();
+            if (in != null) {
+                in.close();
+            }
         } catch (Exception e) {
             throw new RuntimeException("Exception while calling URL:"+ myURL, e);
         }

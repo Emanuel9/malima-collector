@@ -33,6 +33,12 @@ public class JenkinsService {
         return newURL;
     }
 
+//    public String getData(String URL){
+//        RestTemplate restTemplate = new RestTemplate();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//    }
+
     public String curlCommand(String URL) {
         String command = "curl -u " + this.config.getWebsites()[2].getAdminUsername()
                         + ":" + this.config.getWebsites()[2].getAdminPassword() + " " + URL;

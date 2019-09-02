@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AppUserFormTest {
 
-
     @Test
     void getUserId() {
     }

@@ -9,8 +9,10 @@ import com.orange.malimacollector.entities.GitlabEntities.GitLabParameters;
 import com.orange.malimacollector.entities.GitlabEntities.Group;
 import com.orange.malimacollector.entities.GitlabEntities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.orange.malimacollector.service.URLService;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
@@ -45,6 +47,12 @@ public class GitlabService {
         }
         newURL += ("projects" + "?private_token=" + privateToken);
         return newURL;
+    }
+
+    public String getData(String URL){
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, null, String.class);
+        return response.getBody();
     }
     // Serialize/deserialize helpers
 
@@ -100,8 +108,9 @@ public class GitlabService {
     }
 
     public Project[] handler(){
-        String URL = buildURL(this.config.getWebsites()[1].getAdminPassword(),this.config.getWebsites()[1].getAdminUsername());
-        String content = new URLService().callURL(URL);
+        String URL = buildURL(this.config.getWebsites()[1].getAdminPassword(),
+                this.config.getWebsites()[1].getAdminUsername());
+        String content = getData(URL);
             try {
                 return projectFromJsonString(content);
             } catch (IOException e) {

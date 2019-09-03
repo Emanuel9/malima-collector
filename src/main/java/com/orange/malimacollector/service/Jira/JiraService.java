@@ -8,13 +8,12 @@ import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.JiraEntities.Issue;
 import com.orange.malimacollector.entities.JiraEntities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 @Service
@@ -34,68 +33,24 @@ public class JiraService {
         return newURL;
     }
 
-    public String curlCommands(String projectName, String URL){
-        StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder
-                    .append("curl -u ").append(this.config.getWebsites()[3].getAdminUsername())
-                    .append(":").append(this.config.getWebsites()[3].getAdminPassword())
-                    .append(" -X POST ")
-                    .append("-H \"Content-Type: application/json\" ")
-                    .append("--data \"{\\\"jql\\\":\\\"project =")
-                    .append(projectName)
-                    .append("\\\",\\\"startAt\\\":0,\\\"fields\\\":[\\\"id\\\",\\\"key\\\",\\\"name\\\",\\\"description\\\"]}\" ")
-                    .append(URL);
-        String command = stringBuilder.toString();
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-            processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
-            try {
-            Process process = processBuilder.start();
-            StringBuilder sb = new StringBuilder();
-            InputStreamReader in = null;
-            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
-            BufferedReader bufferedReader = new BufferedReader(in);
-            if (bufferedReader != null) {
-                int cp;
-                while ((cp = bufferedReader.read()) != -1) {
-                    sb.append((char) cp);
-                }
-                bufferedReader.close();
-            }
-            in.close();
-            return sb.toString();
-
-        } catch (
-        IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public String getData(String projectName, String URL){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[3].getAdminUsername(),
+                this.config.getWebsites()[3].getAdminPassword()));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String requestJSON = "{\"jql\":\"project =" + projectName + "\",\"startAt\":0,\"fields\":[\"id\",\"key\",\"name\",\"description\"]}";
+        HttpEntity<String> requestEntity = new HttpEntity<String>(requestJSON, headers);
+        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, requestEntity, String.class);
+        return response.getBody();
     }
 
-    public String curlCommands(String URL){
-        String command = "curl -u " + this.config.getWebsites()[2].getAdminUsername()
-                + ":" + this.config.getWebsites()[2].getAdminPassword() + " " + URL;
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-        processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
-        try {
-            Process process = processBuilder.start();
-            StringBuilder sb = new StringBuilder();
-            InputStreamReader in = null;
-            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
-            BufferedReader bufferedReader = new BufferedReader(in);
-            if (bufferedReader != null) {
-                int cp;
-                while ((cp = bufferedReader.read()) != -1) {
-                    sb.append((char) cp);
-                }
-                bufferedReader.close();
-            }
-            in.close();
-            return sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public String getData(String URL){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[3].getAdminUsername(),
+                this.config.getWebsites()[3].getAdminPassword()));
+        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, null, String.class);
+        return response.getBody();
     }
 
     public static Project[] projectFromJsonString(String json) throws IOException {
@@ -159,10 +114,10 @@ public class JiraService {
             case 1:
                 URL = buildURL(1);
                 try {
-                    Project[] projects = projectFromJsonString(curlCommands(buildURL(2)));
+                    Project[] projects = projectFromJsonString(getData(buildURL(2)));
                     ArrayList<Issue> issues= new ArrayList<>();
                     for (Project project: projects) {
-                        content = curlCommands(project.getName(), URL);
+                        content = getData(project.getName(), URL);
                         Issue issue = issueFromJsonString(content);
                         issues.add(issue);
                     }
@@ -172,7 +127,7 @@ public class JiraService {
                 }
             case 2:
                 URL = buildURL(2);
-                content = curlCommands(URL);
+                content = getData(URL);
                 try {
                     return projectFromJsonString(content);
                 } catch (IOException e) {

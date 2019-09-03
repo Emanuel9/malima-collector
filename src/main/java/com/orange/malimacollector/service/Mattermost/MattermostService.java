@@ -12,7 +12,10 @@ import com.orange.malimacollector.entities.MattermostEntities.PostList;
 import com.orange.malimacollector.entities.MattermostEntities.Teams;
 import com.orange.malimacollector.entities.MattermostEntities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,6 +46,20 @@ public class MattermostService {
                 newURL += "channels/";
         }
         return newURL;
+    }
+
+    public String getData(){
+        String URL = this.config.getWebsites()[4].getLocalAddress() + "users/login";
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[3].getAdminUsername(),
+                this.config.getWebsites()[3].getAdminPassword()));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String requestJSON = "{\"login_id\":\"" + this.config.getWebsites()[4].getAdminUsername() +
+                "\",\"password\":\"" + this.config.getWebsites()[4].getAdminPassword() + "\"}";
+        HttpEntity<String> requestEntity = new HttpEntity<String>(requestJSON, headers);
+        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, requestEntity, String.class);
+        return response.getBody();
     }
 
     public String curlInitializeLogin(){

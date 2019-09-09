@@ -20,7 +20,12 @@ public class Status {
     private String isRunning;
 
     @Transient
-    private String command;
+    @Column(name="Website_Check", nullable = false)
+    private String websiteCheck;
+
+    @Transient
+    @Column(name="Website_Index", nullable = false)
+    private Integer websiteIndex;
 
     public Status() {
     }
@@ -54,19 +59,27 @@ public class Status {
         isRunning = running;
     }
 
-    public String getCommand() {
-        return command;
-    }
-
-    public void setCommand(String command) {
-        this.command = command;
-    }
-
     public String getWebsiteName() {
         return websiteName;
     }
 
     public void setWebsiteName(String websiteName) {
         this.websiteName = websiteName;
+    }
+
+    public Integer getWebsiteIndex() {
+        return websiteIndex;
+    }
+
+    public void setWebsiteIndex(Integer websiteIndex) {
+        this.websiteIndex = websiteIndex;
+    }
+
+    public String getWebsiteCheck() {
+        return websiteCheck;
+    }
+
+    public void setWebsiteCheck(String websiteCheck) {
+        this.websiteCheck = websiteCheck;
     }
 }

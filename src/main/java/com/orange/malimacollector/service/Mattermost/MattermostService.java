@@ -13,15 +13,10 @@ import com.orange.malimacollector.entities.MattermostEntities.Teams;
 import com.orange.malimacollector.entities.MattermostEntities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -48,221 +43,27 @@ public class MattermostService {
         return newURL;
     }
 
-    public String getData(){
-        String URL = this.config.getWebsites()[4].getLocalAddress() + "users/login";
+    public String getData(String URL){
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[3].getAdminUsername(),
-                this.config.getWebsites()[3].getAdminPassword()));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String requestJSON = "{\"login_id\":\"" + this.config.getWebsites()[4].getAdminUsername() +
-                "\",\"password\":\"" + this.config.getWebsites()[4].getAdminPassword() + "\"}";
-        HttpEntity<String> requestEntity = new HttpEntity<String>(requestJSON, headers);
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, requestEntity, String.class);
+        headers.set("Authorization", "Bearer " + this.config.getWebsites()[4].getAdminPassword());
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
         return response.getBody();
     }
 
-    public String curlInitializeLogin(){
-        String command = "curl -i -d \"{\\\"login_id\\\":\\\"" + this.config.getWebsites()[4].getAdminUsername() +
-                "\\\",\\\"password\\\":\\\""+ this.config.getWebsites()[4].getAdminPassword() +
-                "\\\"}\" " + this.config.getWebsites()[4].getLocalAddress() + "users/login";
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-        processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
-        try {
-            Process process = processBuilder.start();
-            StringBuilder sb = new StringBuilder();
-            InputStreamReader in = null;
-            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
-            BufferedReader bufferedReader = new BufferedReader(in);
-            if (bufferedReader != null) {
-                int cp;
-                while ((cp = bufferedReader.read()) != -1) {
-                    sb.append((char) cp);
-                }
-                bufferedReader.close();
-            }
-            in.close();
-            return sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    //function to find token
-    public String sessionToken(String response){
-        String[] responseParameters = response.split(":");
-        boolean breakActive = false;
-        for (String parameter: responseParameters){
-            String[] lineDiff = parameter.split("\n");
-            for (String word: lineDiff){
-                if (breakActive){
-                    return word;
-                }
-                if (word.equals("Token")){
-                    breakActive = true;
-                }
-            }
-        }
-        return null;
-    }
-    //function to make further curl commands to the api
-    public String curlCommands(String URL){
-        String token = sessionToken(curlInitializeLogin()).trim();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("curl -H ")
-                .append('"')
-                .append("Authorization: Bearer")
-                .append(" ")
-                .append(token)
-                .append('"')
-                .append(" ")
-                .append(URL);
-        String command = stringBuilder.toString();
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-        processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
-        try {
-            Process process = processBuilder.start();
-            StringBuilder sb = new StringBuilder();
-            InputStreamReader in = null;
-            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
-            BufferedReader bufferedReader = new BufferedReader(in);
-            if (bufferedReader != null) {
-                int cp;
-                while ((cp = bufferedReader.read()) != -1) {
-                    sb.append((char) cp);
-                }
-                bufferedReader.close();
-            }
-            in.close();
-            return sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public String curlCommands(String URL, Teams team){
-        String token = sessionToken(curlInitializeLogin()).trim();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("curl -H ")
-                .append('"')
-                .append("Authorization: Bearer")
-                .append(" ")
-                .append(token)
-                .append('"')
-                .append(" ")
-                .append(URL);
-        stringBuilder
-                .append(team.getID())
-                .append("/channels");
-        String command = stringBuilder.toString();
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-        processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
-        try {
-            Process process = processBuilder.start();
-            StringBuilder sb = new StringBuilder();
-            InputStreamReader in = null;
-            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
-            BufferedReader bufferedReader = new BufferedReader(in);
-            if (bufferedReader != null) {
-                int cp;
-                while ((cp = bufferedReader.read()) != -1) {
-                    sb.append((char) cp);
-                }
-                bufferedReader.close();
-            }
-            in.close();
-            return sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public String curlCommands(String URL, Channel channel){
-        String token = sessionToken(curlInitializeLogin()).trim();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("curl -H ")
-                .append('"')
-                .append("Authorization: Bearer")
-                .append(" ")
-                .append(token)
-                .append('"')
-                .append(" ")
-                .append(URL);
-        stringBuilder
-                .append(channel.getID())
-                .append("/posts");
-        String command = stringBuilder.toString();
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-        processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
-        try {
-            Process process = processBuilder.start();
-            StringBuilder sb = new StringBuilder();
-            InputStreamReader in = null;
-            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
-            BufferedReader bufferedReader = new BufferedReader(in);
-            if (bufferedReader != null) {
-                int cp;
-                while ((cp = bufferedReader.read()) != -1) {
-                    sb.append((char) cp);
-                }
-                bufferedReader.close();
-            }
-            in.close();
-            return sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    //search posts in a team
-    //curl -d "{\"terms\": \"test\",\"is_or_search\":true,\"time_zone_offset\": 0,\"include_deleted_channels\":true,\"page\": 0,\"per_page\": 60}" -i -X POST -H "Authorization: Bearer sct9g5j18fgazkoau866fn6odw" http://localhost:8065/api/v4/teams/biey6xaoxig9ume363f7qh8ryc/posts/search
-    public String curlCommands(String URL, Teams team, String searchTerm) {
-        String token = sessionToken(curlInitializeLogin()).trim();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("curl -d \"{\\\"terms\\\": \\\"")
-                .append(searchTerm)
-                .append("\\\",\\\"is_or_search\\\":true,\\\"time_zone_offset\\\": 0,\\\"include_deleted_channels\\\":true,\\\"page\\\": 0,\\\"per_page\\\": 60}\" -X POST -H \"")
-                .append("Authorization: Bearer")
-                .append(" ")
-                .append(token)
-                .append('"')
-                .append(" ")
-                .append(URL);
-        stringBuilder
-                .append(team.getID())
-                .append("/posts/search");
-        String command = stringBuilder.toString();
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-        processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
-        try {
-            Process process = processBuilder.start();
-            StringBuilder sb = new StringBuilder();
-            InputStreamReader in = null;
-            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
-            BufferedReader bufferedReader = new BufferedReader(in);
-            if (bufferedReader != null) {
-                int cp;
-                while ((cp = bufferedReader.read()) != -1) {
-                    sb.append((char) cp);
-                }
-                bufferedReader.close();
-            }
-            in.close();
-            return sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public String getData(String URL, Teams team, String searchTerm){
+        URL += (team.getID() + "/posts/search");
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + this.config.getWebsites()[4].getAdminPassword());
+        String requestJSON = "{\"terms\": \"" + searchTerm +
+                "\",\"is_or_search\":true,\"time_zone_offset\": 0,\"include_deleted_channels\":true,\"page\": 0,\"per_page\": 60}";
+        HttpEntity<String> entity = new HttpEntity<String>(requestJSON, headers);
+        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
+        return response.getBody();
     }
 
     // Serialize/deserialize helpers
@@ -365,7 +166,7 @@ public class MattermostService {
         switch (choice){
             case 1:
                 URL = buildURL(1);
-                content = curlCommands(URL);
+                content = getData(URL);
                 try {
                     return userFromJsonString(content);
                 } catch (IOException e) {
@@ -374,7 +175,7 @@ public class MattermostService {
                 }
             case 2:
                 URL = buildURL(2);
-                content = curlCommands(URL);
+                content = getData(URL);
                 try {
                     return teamsFromJsonString(content);
                 } catch (IOException e) {
@@ -387,8 +188,8 @@ public class MattermostService {
     }
 
     public Object handler(Teams team){
-        String URL = buildURL(3);
-        String content = curlCommands(URL, team);
+        String URL = buildURL(3) + team.getID() + "/channels";
+        String content = getData(URL);
         try {
             return channelFromJsonString(content);
         } catch (IOException e) {
@@ -398,8 +199,8 @@ public class MattermostService {
     }
 
     public Object handler(Channel channel) {
-        String URL = buildURL(4);
-        String content = curlCommands(URL, channel);
+        String URL = buildURL(4) + channel.getID() + "/posts";
+        String content = getData(URL);
         try {
             return postFromJsonString(content);
         } catch (IOException e) {
@@ -411,7 +212,7 @@ public class MattermostService {
     public ArrayList<String> handler(String searchTerm, Teams team) {
         String URL = buildURL(3);
         ArrayList<String> posts = new ArrayList<>();
-        JsonObject o = new JsonParser().parse(curlCommands(URL, team, searchTerm)).getAsJsonObject();
+        JsonObject o = new JsonParser().parse(getData(URL, team, searchTerm)).getAsJsonObject();
 
         for(Map.Entry<String, JsonElement> entry : o.entrySet()) {
             if (entry.getKey().equals("posts")) {

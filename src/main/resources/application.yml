@@ -33,8 +33,8 @@ address:
       adminPassword: admin
     - websiteName: Mattermost
       localAddress: http://localhost:8065/api/v4/
-      adminUsername: alexm
-      adminPassword: mz-789
+      adminUsername: mof4ra1i73gxbj5cidxtmbfhqo
+      adminPassword: myfooc5mrjfsjnhydgaein7d6h
     - websiteName: Rundeck
       localAddress: http://127.0.0.1:4440/
       adminUsername: alexm

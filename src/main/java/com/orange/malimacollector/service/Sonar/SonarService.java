@@ -8,13 +8,13 @@ import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.SonarEntities.Issue;
 import com.orange.malimacollector.entities.SonarEntities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
 
 @Service
 public class SonarService {
@@ -34,31 +34,12 @@ public class SonarService {
         return newURL;
     }
 
-    public String curlCommand(String URL) {
-        String command = "curl -u " + this.config.getWebsites()[6].getAdminUsername() + ":" +
-                this.config.getWebsites()[6].getAdminPassword() + " " + URL;
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-        processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
-        try {
-            Process process = processBuilder.start();
-            StringBuilder sb = new StringBuilder();
-            InputStreamReader in = null;
-            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
-            BufferedReader bufferedReader = new BufferedReader(in);
-            if (bufferedReader != null) {
-                int cp;
-                while ((cp = bufferedReader.read()) != -1) {
-                    sb.append((char) cp);
-                }
-                bufferedReader.close();
-            }
-            in.close();
-            return sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public String getData(String URL){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[6].getAdminUsername(),
+                this.config.getWebsites()[6].getAdminPassword()));
+        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, null, String.class);
+        return response.getBody();
     }
 
     public static Project projectFromJsonString(String json) throws IOException {
@@ -121,7 +102,7 @@ public class SonarService {
         switch (choice){
             case 1:
                 URL = buildURL(1);
-                content = curlCommand(URL);
+                content = getData(URL);
                 try {
                     return issueFromJsonString(content);
                 } catch (IOException e) {
@@ -129,7 +110,7 @@ public class SonarService {
                 }
             case 2:
                 URL = buildURL(2);
-                content = curlCommand(URL);
+                content = getData(URL);
                 try {
                     return projectFromJsonString(content);
                 } catch (IOException e) {

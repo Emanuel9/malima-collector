@@ -8,13 +8,11 @@ import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.RundeckEntities.Job;
 import com.orange.malimacollector.entities.RundeckEntities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 @Service
@@ -35,30 +33,13 @@ public class RundeckService {
         return newURL;
     }
 
-    public String curlCommand(String URL) {
-        String command = "curl -H \"Accept: application/json\" " + URL;
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-        processBuilder.directory(Paths.get("C:/Windows/System32").toFile());
-        try {
-            Process process = processBuilder.start();
-            StringBuilder sb = new StringBuilder();
-            InputStreamReader in = null;
-            in = new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
-            BufferedReader bufferedReader = new BufferedReader(in);
-            if (bufferedReader != null) {
-                int cp;
-                while ((cp = bufferedReader.read()) != -1) {
-                    sb.append((char) cp);
-                }
-                bufferedReader.close();
-            }
-            in.close();
-            return sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public String getData(String URL){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
+        return response.getBody();
     }
 
     public static Project[] projectFromJsonString(String json) throws IOException {
@@ -122,7 +103,7 @@ public class RundeckService {
             case 1:
                 URL = buildURL(1);
                 URL += ("?authtoken=" + this.config.getWebsites()[5].getAdminPassword());
-                content = curlCommand(URL);
+                content = getData(URL);
                 try {
                     return projectFromJsonString(content);
                 } catch (IOException e) {
@@ -134,7 +115,7 @@ public class RundeckService {
                 ArrayList<Job[]> jobCollection = new ArrayList<>();
                 for (Project project : projects){
                     String newURL = URL + project.getName() + "/jobs?authtoken=" + this.config.getWebsites()[5].getAdminPassword();
-                    content = curlCommand(newURL);
+                    content = getData(newURL);
                     try {
                         jobCollection.add(jobFromJsonString(content));
                     } catch (IOException e) {

@@ -100,6 +100,17 @@
 			<version>RELEASE</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.rundeck</groupId>
+			<artifactId>rundeck-core</artifactId>
+			<version>3.0.16-20190223</version>
+		</dependency>
+		<dependency>
+			<groupId>org.sonarsource.sonarqube</groupId>
+			<artifactId>sonar-plugin-api</artifactId>
+			<version>7.9.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

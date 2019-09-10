@@ -68,8 +68,8 @@ public class ApplicationIntegrationTests {
         };
         Page page = new Page();
         page.setResults(results);
-        given(confluenceServiceMock.handler(1)).willReturn(page);
-        assertEquals(results.length, ((Page)confluenceServiceMock.handler(1)).getResults().length);
+        given(confluenceServiceMock.handler()).willReturn(page);
+        assertEquals(results.length, ((Page)confluenceServiceMock.handler()).getResults().length);
     }
 
     @Test
@@ -91,8 +91,8 @@ public class ApplicationIntegrationTests {
         };
         JenkinsInfo jenkinsInfo = new JenkinsInfo();
         jenkinsInfo.setJobs(jobs);
-        given(jenkinsServiceMock.handler(1)).willReturn(jenkinsInfo);
-        assertEquals(jobs.length, ((JenkinsInfo)jenkinsServiceMock.handler(1)).getJobs().length);
+        given(jenkinsServiceMock.handler()).willReturn(jenkinsInfo);
+        assertEquals(jobs.length, ((JenkinsInfo)jenkinsServiceMock.handler()).getJobs().length);
     }
 
     @Test

@@ -37,11 +37,11 @@ public class ConfluenceService {
         return newURL;
     }
 
-    public String getData(String URL){
+    public String getData(String url){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[0].getAdminUsername(),
                 this.config.getWebsites()[0].getAdminPassword()));
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
         return response.getBody();
     }
 
@@ -73,10 +73,10 @@ public class ConfluenceService {
     }
 
     public Object handler(int choice){
-        String URL;
+        String url;
         String content;
-        URL = buildURL(1);
-        content = getData(URL);
+        url = buildURL(1);
+        content = getData(url);
         try {
             return pageFromJsonString(content);
         } catch (IOException e) {

@@ -37,11 +37,11 @@ public class JenkinsService {
         return newURL;
     }
 
-    public String getData(String URL){
+    public String getData(String url){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[2].getAdminUsername(),
                 this.config.getWebsites()[2].getAdminPassword()));
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
         return response.getBody();
     }
 
@@ -73,10 +73,10 @@ public class JenkinsService {
     }
 
     public Object handler(int choice){
-        String URL;
+        String url;
         String content;
-        URL = buildURL(1);
-        content = getData(URL);
+        url = buildURL(1);
+        content = getData(url);
         try {
             return fromJsonString(content);
         } catch (IOException e) {

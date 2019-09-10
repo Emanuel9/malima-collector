@@ -34,11 +34,11 @@ public class SonarService {
         return newURL;
     }
 
-    public String getData(String URL){
+    public String getData(String url){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[6].getAdminUsername(),
                 this.config.getWebsites()[6].getAdminPassword()));
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
         return response.getBody();
     }
 
@@ -97,20 +97,20 @@ public class SonarService {
     }
 
     public Object handler(int choice){
-        String URL;
+        String url;
         String content;
         switch (choice){
             case 1:
-                URL = buildURL(1);
-                content = getData(URL);
+                url = buildURL(1);
+                content = getData(url);
                 try {
                     return issueFromJsonString(content);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             case 2:
-                URL = buildURL(2);
-                content = getData(URL);
+                url = buildURL(2);
+                content = getData(url);
                 try {
                     return projectFromJsonString(content);
                 } catch (IOException e) {

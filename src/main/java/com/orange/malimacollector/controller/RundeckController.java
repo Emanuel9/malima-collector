@@ -21,7 +21,8 @@ public class RundeckController {
         Project[] projects = (Project[]) rundeckService.handler(1);
         model.addAttribute("projects", projects);
         ArrayList<Job[]> jobCollection = (ArrayList<Job[]>) rundeckService.handler(2);
-        int i = 0, size = 0;
+        int i = 0;
+        int size = 0;
         for (Job[] jobs: jobCollection){
             size += jobs.length;
         }

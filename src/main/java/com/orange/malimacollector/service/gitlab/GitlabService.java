@@ -53,9 +53,9 @@ public class GitlabService {
         return newURL;
     }
 
-    public String getData(String URL){
+    public String getData(String url){
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
         return response.getBody();
     }
     // Serialize/deserialize helpers
@@ -112,9 +112,9 @@ public class GitlabService {
     }
 
     public Project[] handler(){
-        String URL = buildURL(this.config.getWebsites()[1].getAdminPassword(),
+        String url = buildURL(this.config.getWebsites()[1].getAdminPassword(),
                 this.config.getWebsites()[1].getAdminUsername());
-        String content = getData(URL);
+        String content = getData(url);
             try {
                 return projectFromJsonString(content);
             } catch (IOException e) {

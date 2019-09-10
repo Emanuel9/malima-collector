@@ -33,7 +33,7 @@ public class JiraService {
         return newURL;
     }
 
-    public String getData(String projectName, String URL){
+    public String getData(String projectName, String url){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[3].getAdminUsername(),
                 this.config.getWebsites()[3].getAdminPassword()));
@@ -41,15 +41,15 @@ public class JiraService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         String requestJSON = "{\"jql\":\"project =" + projectName + "\",\"startAt\":0,\"fields\":[\"id\",\"key\",\"name\",\"description\"]}";
         HttpEntity<String> requestEntity = new HttpEntity<String>(requestJSON, headers);
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
         return response.getBody();
     }
 
-    public String getData(String URL){
+    public String getData(String url){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[3].getAdminUsername(),
                 this.config.getWebsites()[3].getAdminPassword()));
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
         return response.getBody();
     }
 
@@ -108,16 +108,16 @@ public class JiraService {
     }
 
     public Object handler(int choice){
-        String URL;
+        String url;
         String content;
         switch (choice){
             case 1:
-                URL = buildURL(1);
+                url = buildURL(1);
                 try {
                     Project[] projects = projectFromJsonString(getData(buildURL(2)));
                     ArrayList<Issue> issues= new ArrayList<>();
                     for (Project project: projects) {
-                        content = getData(project.getName(), URL);
+                        content = getData(project.getName(), url);
                         Issue issue = issueFromJsonString(content);
                         issues.add(issue);
                     }
@@ -126,8 +126,8 @@ public class JiraService {
                     e.printStackTrace();
                 }
             case 2:
-                URL = buildURL(2);
-                content = getData(URL);
+                url = buildURL(2);
+                content = getData(url);
                 try {
                     return projectFromJsonString(content);
                 } catch (IOException e) {

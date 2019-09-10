@@ -37,12 +37,12 @@ public class RundeckService {
         return newURL;
     }
 
-    public String getData(String URL){
+    public String getData(String url){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return response.getBody();
     }
 
@@ -101,24 +101,24 @@ public class RundeckService {
     }
 
     public Object handler(int choice){
-        String URL;
+        String url;
         String content;
         switch (choice){
             case 1:
-                URL = buildURL(1);
-                URL += ("?authtoken=" + this.config.getWebsites()[5].getAdminPassword());
-                content = getData(URL);
+                url = buildURL(1);
+                url += ("?authtoken=" + this.config.getWebsites()[5].getAdminPassword());
+                content = getData(url);
                 try {
                     return projectFromJsonString(content);
                 } catch (IOException e) {
                     logger.error("Rundeck Project Error:" + e.getMessage());
                 }
             case 2:
-                URL = buildURL(2);
+                url = buildURL(2);
                 Project[] projects = (Project[]) handler(1);
                 ArrayList<Job[]> jobCollection = new ArrayList<>();
                 for (Project project : projects){
-                    String newURL = URL + project.getName() + "/jobs?authtoken=" + this.config.getWebsites()[5].getAdminPassword();
+                    String newURL = url + project.getName() + "/jobs?authtoken=" + this.config.getWebsites()[5].getAdminPassword();
                     content = getData(newURL);
                     try {
                         jobCollection.add(jobFromJsonString(content));

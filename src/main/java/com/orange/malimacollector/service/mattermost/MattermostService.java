@@ -47,18 +47,18 @@ public class MattermostService {
         return newURL;
     }
 
-    public String getData(String URL){
+    public String getData(String url){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + this.config.getWebsites()[4].getAdminPassword());
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return response.getBody();
     }
 
-    public String getData(String URL, Teams team, String searchTerm){
-        URL += (team.getID() + "/posts/search");
+    public String getData(String url, Teams team, String searchTerm){
+        url += (team.getID() + "/posts/search");
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -66,7 +66,7 @@ public class MattermostService {
         String requestJSON = "{\"terms\": \"" + searchTerm +
                 "\",\"is_or_search\":true,\"time_zone_offset\": 0,\"include_deleted_channels\":true,\"page\": 0,\"per_page\": 60}";
         HttpEntity<String> entity = new HttpEntity<String>(requestJSON, headers);
-        ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         return response.getBody();
     }
 
@@ -165,12 +165,12 @@ public class MattermostService {
     }
 
     public Object handler(int choice){
-        String URL;
+        String url;
         String content;
         switch (choice){
             case 1:
-                URL = buildURL(1);
-                content = getData(URL);
+                url = buildURL(1);
+                content = getData(url);
                 try {
                     return userFromJsonString(content);
                 } catch (IOException e) {
@@ -178,8 +178,8 @@ public class MattermostService {
                     return null;
                 }
             case 2:
-                URL = buildURL(2);
-                content = getData(URL);
+                url = buildURL(2);
+                content = getData(url);
                 try {
                     return teamsFromJsonString(content);
                 } catch (IOException e) {
@@ -192,8 +192,8 @@ public class MattermostService {
     }
 
     public Object handler(Teams team){
-        String URL = buildURL(3) + team.getID() + "/channels";
-        String content = getData(URL);
+        String url = buildURL(3) + team.getID() + "/channels";
+        String content = getData(url);
         try {
             return channelFromJsonString(content);
         } catch (IOException e) {
@@ -203,8 +203,8 @@ public class MattermostService {
     }
 
     public Object handler(Channel channel) {
-        String URL = buildURL(4) + channel.getID() + "/posts";
-        String content = getData(URL);
+        String url = buildURL(4) + channel.getID() + "/posts";
+        String content = getData(url);
         try {
             return postFromJsonString(content);
         } catch (IOException e) {
@@ -214,9 +214,9 @@ public class MattermostService {
     }
 
     public ArrayList<String> handler(String searchTerm, Teams team) {
-        String URL = buildURL(3);
+        String url = buildURL(3);
         ArrayList<String> posts = new ArrayList<>();
-        JsonObject o = new JsonParser().parse(getData(URL, team, searchTerm)).getAsJsonObject();
+        JsonObject o = new JsonParser().parse(getData(url, team, searchTerm)).getAsJsonObject();
 
         for(Map.Entry<String, JsonElement> entry : o.entrySet()) {
             if (entry.getKey().equals("posts")) {

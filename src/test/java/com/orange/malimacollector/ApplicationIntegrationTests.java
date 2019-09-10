@@ -96,7 +96,6 @@ public class ApplicationIntegrationTests {
 
     @Test
     public void testFetchingJiraData(){
-
         com.orange.malimacollector.entities.JiraEntities.Project[] projects = new com.orange.malimacollector.entities.JiraEntities.Project[]{
           new com.orange.malimacollector.entities.JiraEntities.Project()
         };

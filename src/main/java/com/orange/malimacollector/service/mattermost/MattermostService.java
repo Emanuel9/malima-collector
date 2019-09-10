@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -43,6 +44,9 @@ public class MattermostService {
                 break;
             case 4:
                 newURL += "channels/";
+                break;
+            default:
+                newURL += "";
         }
         return newURL;
     }
@@ -52,7 +56,7 @@ public class MattermostService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + this.config.getWebsites()[4].getAdminPassword());
-        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return response.getBody();
     }
@@ -65,7 +69,7 @@ public class MattermostService {
         headers.set("Authorization", "Bearer " + this.config.getWebsites()[4].getAdminPassword());
         String requestJSON = "{\"terms\": \"" + searchTerm +
                 "\",\"is_or_search\":true,\"time_zone_offset\": 0,\"include_deleted_channels\":true,\"page\": 0,\"per_page\": 60}";
-        HttpEntity<String> entity = new HttpEntity<String>(requestJSON, headers);
+        HttpEntity<String> entity = new HttpEntity<>(requestJSON, headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         return response.getBody();
     }
@@ -129,19 +133,9 @@ public class MattermostService {
         return userReader;
     }
 
-    private static ObjectWriter getUserObjectWriter() {
-        if (userWriter == null) instantiateUserMapper();
-        return userWriter;
-    }
-
     private static ObjectReader getTeamsObjectReader() {
         if (teamReader == null) instantiateTeamsMapper();
         return teamReader;
-    }
-
-    private static ObjectWriter getTeamsObjectWriter() {
-        if (teamWriter == null) instantiateTeamsMapper();
-        return teamWriter;
     }
 
     private static ObjectReader getChannelObjectReader() {
@@ -149,19 +143,10 @@ public class MattermostService {
         return channelReader;
     }
 
-    private static ObjectWriter getChannelObjectWriter() {
-        if (channelWriter == null) instantiateChannelMapper();
-        return channelWriter;
-    }
 
     private static ObjectReader getPostObjectReader() {
         if (postReader == null) instantiatePostMapper();
         return postReader;
-    }
-
-    private static ObjectWriter getPostObjectWriter() {
-        if (postWriter == null) instantiatePostMapper();
-        return postWriter;
     }
 
     public Object handler(int choice){
@@ -213,7 +198,7 @@ public class MattermostService {
         }
     }
 
-    public ArrayList<String> handler(String searchTerm, Teams team) {
+    public List<String> handler(String searchTerm, Teams team) {
         String url = buildURL(3);
         ArrayList<String> posts = new ArrayList<>();
         JsonObject o = new JsonParser().parse(getData(url, team, searchTerm)).getAsJsonObject();

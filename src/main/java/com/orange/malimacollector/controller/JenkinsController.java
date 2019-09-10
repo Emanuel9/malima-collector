@@ -16,7 +16,7 @@ public class JenkinsController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/jenkins")
     public String jenkinsDisplay(Model model){
-        PrimaryView[] jobs = ((JenkinsInfo)jenkinsService.handler(1)).getJobs();
+        PrimaryView[] jobs = ((JenkinsInfo)jenkinsService.handler()).getJobs();
         model.addAttribute("jobs", jobs);
         return "jenkins";
     }

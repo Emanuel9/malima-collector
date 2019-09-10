@@ -10,8 +10,8 @@ public enum Type {
 
     @JsonValue
     public String toValue() {
-        switch (this) {
-            case PAGE: return "page";
+        if (this == Type.PAGE) {
+            return "page";
         }
         return null;
     }

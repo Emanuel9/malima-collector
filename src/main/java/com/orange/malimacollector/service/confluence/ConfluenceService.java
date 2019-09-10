@@ -24,16 +24,9 @@ public class ConfluenceService {
     @Autowired
     private MachineConfiguration config;
 
-    public String buildURL(int choice){
+    public String buildURL(){
         String newURL = this.config.getWebsites()[0].getLocalAddress();
-        switch(choice){
-            case 1:
-                newURL += "/search?cql=(type=page and space=ds)";
-                break;
-            case 2:
-                newURL += "";
-                break;
-        }
+        newURL += "/search?cql=(type=page and space=ds)";
         return newURL;
     }
 
@@ -72,10 +65,10 @@ public class ConfluenceService {
         return pageWriter;
     }
 
-    public Object handler(int choice){
+    public Object handler(){
         String url;
         String content;
-        url = buildURL(1);
+        url = buildURL();
         content = getData(url);
         try {
             return pageFromJsonString(content);

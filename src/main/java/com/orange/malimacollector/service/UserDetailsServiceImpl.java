@@ -30,16 +30,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         String roleName = this.appUserDAO.getRoleNames(appUser.getUserId());
 
-        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> grantList = new ArrayList<>();
         if (roleName != null) {
             GrantedAuthority authority = new SimpleGrantedAuthority(roleName);
             grantList.add(authority);
         }
 
-        UserDetails userDetails = (UserDetails) new User(appUser.getUserName(),
+        return new User(appUser.getUserName(),
                 appUser.getEncryptedPassword(), grantList);
-
-        return userDetails;
     }
 
 }

@@ -10,8 +10,8 @@ public enum Status {
 
     @JsonValue
     public String toValue() {
-        switch (this) {
-            case CURRENT: return "current";
+        if (this == Status.CURRENT) {
+            return "current";
         }
         return null;
     }

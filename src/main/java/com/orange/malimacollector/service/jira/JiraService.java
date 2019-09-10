@@ -21,14 +21,12 @@ public class JiraService {
     @Autowired
     private MachineConfiguration config;
 
-    public String buildURL(int choice){
+    public String buildURL(int choice) {
         String newURL = this.config.getWebsites()[3].getLocalAddress();
-        switch (choice){
-            case 1:
-                newURL += "search";
-                break;
-            case 2:
-                newURL += "project";
+        if (choice == 1){
+            newURL += "search";
+        } else {
+            newURL += "project";
         }
         return newURL;
     }
@@ -40,7 +38,7 @@ public class JiraService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String requestJSON = "{\"jql\":\"project =" + projectName + "\",\"startAt\":0,\"fields\":[\"id\",\"key\",\"name\",\"description\"]}";
-        HttpEntity<String> requestEntity = new HttpEntity<String>(requestJSON, headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestJSON, headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
         return response.getBody();
     }
@@ -110,31 +108,32 @@ public class JiraService {
     public Object handler(int choice){
         String url;
         String content;
-        switch (choice){
-            case 1:
-                url = buildURL(1);
-                try {
-                    Project[] projects = projectFromJsonString(getData(buildURL(2)));
-                    ArrayList<Issue> issues= new ArrayList<>();
-                    for (Project project: projects) {
-                        content = getData(project.getName(), url);
-                        Issue issue = issueFromJsonString(content);
-                        issues.add(issue);
-                    }
-                    return issues;
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if (choice == 1) {
+            url = buildURL(1);
+            try {
+                Project[] projects = projectFromJsonString(getData(buildURL(2)));
+                ArrayList<Issue> issues = new ArrayList<>();
+                for (Project project : projects) {
+                    content = getData(project.getName(), url);
+                    Issue issue = issueFromJsonString(content);
+                    issues.add(issue);
                 }
-            case 2:
-                url = buildURL(2);
-                content = getData(url);
-                try {
-                    return projectFromJsonString(content);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            default:
+                return issues;
+            } catch (IOException e) {
+                e.printStackTrace();
                 return null;
+            }
+        } else if (choice == 2) {
+            url = buildURL(2);
+            content = getData(url);
+            try {
+                return projectFromJsonString(content);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            return null;
         }
     }
 }

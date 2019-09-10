@@ -24,8 +24,8 @@ import java.util.List;
 
 @Controller
 public class MalimaCollectorController {
-    private static final String register = "registerPage";
-    private static final String user = "userInfo";
+    private static final String REGISTER = "registerPage";
+    private static final String USER = "userInfo";
 
     @Autowired
     private AppUserDAO appUserDAO;
@@ -74,7 +74,7 @@ public class MalimaCollectorController {
 
         model.addAttribute("appUserForm", form);
 
-        return register;
+        return REGISTER;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -84,7 +84,7 @@ public class MalimaCollectorController {
                                final RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-            return register;
+            return REGISTER;
         }
         AppUser newUser= null;
         try {
@@ -92,7 +92,7 @@ public class MalimaCollectorController {
         }
         catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
-            return register;
+            return REGISTER;
         }
 
         redirectAttributes.addFlashAttribute("flashUser", newUser);
@@ -105,7 +105,7 @@ public class MalimaCollectorController {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
 
         String userInfo = WebUtils.toString(loginedUser);
-        model.addAttribute(user, userInfo);
+        model.addAttribute(USER, userInfo);
 
         return "adminPage";
     }
@@ -127,7 +127,7 @@ public class MalimaCollectorController {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
 
         String userInfo = WebUtils.toString(loginedUser);
-        model.addAttribute(user, userInfo);
+        model.addAttribute(USER, userInfo);
 
         return "userInfoPage";
     }
@@ -140,9 +140,9 @@ public class MalimaCollectorController {
 
             String userInfo = WebUtils.toString(loginedUser);
 
-            model.addAttribute(user, userInfo);
+            model.addAttribute(USER, userInfo);
 
-            String message = "Hi " + principal.getName() //
+            String message = "Hi " + principal.getName()
                     + "<br> You do not have permission to access this page!";
             model.addAttribute("message", message);
 

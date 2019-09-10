@@ -15,7 +15,7 @@ public class ConfluenceController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/confluence")
     public String confluenceDisplay(Model model){
-        Page collection = (Page) confluenceService.handler(1);
+        Page collection = (Page) confluenceService.handler();
         model.addAttribute("collection",collection);
         return "confluence";
     }

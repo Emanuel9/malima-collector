@@ -10,8 +10,8 @@ public enum Space {
 
     @JsonValue
     public String toValue() {
-        switch (this) {
-            case REST_API_SPACE_DS: return "/rest/api/space/ds";
+        if (this == Space.REST_API_SPACE_DS) {
+            return "/rest/api/space/ds";
         }
         return null;
     }

@@ -23,13 +23,10 @@ public class SonarService {
 
     public String buildURL(int choice){
         String newURL = this.config.getWebsites()[6].getLocalAddress();
-        switch (choice){
-            case 1:
-                newURL += "issues/search";
-                break;
-            case 2:
-                newURL += "projects/search";
-                break;
+        if (choice == 1) {
+            newURL += "issues/search";
+        } else {
+            newURL += "projects/search";
         }
         return newURL;
     }
@@ -99,25 +96,24 @@ public class SonarService {
     public Object handler(int choice){
         String url;
         String content;
-        switch (choice){
-            case 1:
-                url = buildURL(1);
-                content = getData(url);
-                try {
-                    return issueFromJsonString(content);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            case 2:
-                url = buildURL(2);
-                content = getData(url);
-                try {
-                    return projectFromJsonString(content);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            default:
+        if (choice == 1) {
+            url = buildURL(1);
+            content = getData(url);
+            try {
+                return issueFromJsonString(content);
+            } catch (IOException e) {
+                e.printStackTrace();
                 return null;
+            }
+        } else {
+            url = buildURL(2);
+            content = getData(url);
+            try {
+                return projectFromJsonString(content);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
     }
 }

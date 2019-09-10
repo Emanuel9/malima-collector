@@ -7,6 +7,8 @@ import java.util.Collection;
 
 public class WebUtils {
 
+    private WebUtils() {}
+
     public static String toString(User user) {
         StringBuilder sb = new StringBuilder();
 

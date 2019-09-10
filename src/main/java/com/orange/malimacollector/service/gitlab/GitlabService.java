@@ -35,7 +35,7 @@ public class GitlabService {
         this.parameters = parameters;
     }
 
-    public String buildURL(String privateToken, String ID){
+    public String buildURL(String privateToken, String id){
         String newURL = this.config.getWebsites()[1].getLocalAddress();
         String modifier;
         if (parameters.isGroup()){
@@ -47,7 +47,7 @@ public class GitlabService {
         }
         newURL += modifier;
         if (parameters.hasID()) {
-            newURL = newURL + ID + "/";
+            newURL = newURL + id + "/";
         }
         newURL += ("projects" + "?private_token=" + privateToken);
         return newURL;
@@ -119,7 +119,7 @@ public class GitlabService {
                 return projectFromJsonString(content);
             } catch (IOException e) {
                 logger.error("Gitlab Service: " + e.getMessage());
-                return null;
+                return new Project[]{};
             }
     }
 }

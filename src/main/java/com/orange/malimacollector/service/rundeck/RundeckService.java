@@ -26,13 +26,10 @@ public class RundeckService {
 
     public String buildURL(int choice){
         String newURL = this.config.getWebsites()[5].getLocalAddress();
-        switch (choice){
-            case 1:
-                newURL += "api/1/projects";
-                break;
-            case 2:
-                newURL += "api/14/project/";
-                break;
+        if (choice == 1) {
+            newURL += "api/1/projects";
+        } else {
+            newURL += "api/14/project/";
         }
         return newURL;
     }
@@ -41,7 +38,7 @@ public class RundeckService {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return response.getBody();
     }
@@ -103,32 +100,30 @@ public class RundeckService {
     public Object handler(int choice){
         String url;
         String content;
-        switch (choice){
-            case 1:
-                url = buildURL(1);
-                url += ("?authtoken=" + this.config.getWebsites()[5].getAdminPassword());
-                content = getData(url);
-                try {
-                    return projectFromJsonString(content);
-                } catch (IOException e) {
-                    logger.error("Rundeck Project Error:" + e.getMessage());
-                }
-            case 2:
-                url = buildURL(2);
-                Project[] projects = (Project[]) handler(1);
-                ArrayList<Job[]> jobCollection = new ArrayList<>();
-                for (Project project : projects){
-                    String newURL = url + project.getName() + "/jobs?authtoken=" + this.config.getWebsites()[5].getAdminPassword();
-                    content = getData(newURL);
-                    try {
-                        jobCollection.add(jobFromJsonString(content));
-                    } catch (IOException e) {
-                        logger.error("Rundeck Job Error:" + e.getMessage());
-                    }
-                }
-                return jobCollection;
-            default:
+        if (choice == 1) {
+            url = buildURL(1);
+            url += ("?authtoken=" + this.config.getWebsites()[5].getAdminPassword());
+            content = getData(url);
+            try {
+                return projectFromJsonString(content);
+            } catch (IOException e) {
+                logger.error("Rundeck Project Error:" + e.getMessage());
                 return null;
+            }
+        } else {
+            url = buildURL(2);
+            Project[] projects = (Project[]) handler(1);
+            ArrayList<Job[]> jobCollection = new ArrayList<>();
+            for (Project project : projects) {
+                String newURL = url + project.getName() + "/jobs?authtoken=" + this.config.getWebsites()[5].getAdminPassword();
+                content = getData(newURL);
+                try {
+                    jobCollection.add(jobFromJsonString(content));
+                } catch (IOException e) {
+                    logger.error("Rundeck Job Error:" + e.getMessage());
+                }
+            }
+            return jobCollection;
         }
     }
 }

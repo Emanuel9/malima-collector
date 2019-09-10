@@ -24,16 +24,9 @@ public class JenkinsService {
     @Autowired
     private MachineConfiguration config;
 
-    public String buildURL(int choice){
+    public String buildURL(){
         String newURL = this.config.getWebsites()[2].getLocalAddress();
-        switch (choice){
-            case 1:
-                newURL += "api/json?pretty=true";
-                break;
-            case 2:
-                newURL += "";
-                break;
-        }
+        newURL += "api/json?pretty=true";
         return newURL;
     }
 
@@ -72,10 +65,10 @@ public class JenkinsService {
         return writer;
     }
 
-    public Object handler(int choice){
+    public Object handler(){
         String url;
         String content;
-        url = buildURL(1);
+        url = buildURL();
         content = getData(url);
         try {
             return fromJsonString(content);

@@ -48,7 +48,7 @@ public class StatusService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Authorization", "Bearer " + this.config.getWebsites()[index].getAdminPassword());
-            HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+            HttpEntity<String> entity = new HttpEntity<>(null, headers);
             response = restTemplate.exchange(status.getWebsiteCheck(), HttpMethod.GET, entity, String.class);
         } else {
             restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(this.config.getWebsites()[index].getAdminUsername(),

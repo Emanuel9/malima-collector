@@ -46,13 +46,13 @@ public class AnalyticsController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/analytics")
     public String analyticsView(Model model){
-        int confluencePages = ((Page)confluenceService.handler(1)).getResults().length;
+        int confluencePages = ((Page)confluenceService.handler()).getResults().length;
         model.addAttribute("confluencePages", confluencePages);
 
         int gitlabProjects = gitlabService.handler().length;
         model.addAttribute("gitlabProjects", gitlabProjects);
 
-        int jenkinsJobs = ((JenkinsInfo)jenkinsService.handler(1)).getJobs().length;
+        int jenkinsJobs = ((JenkinsInfo)jenkinsService.handler()).getJobs().length;
         model.addAttribute("jenkinsJobs", jenkinsJobs);
 
         int jiraProjects = ((Project[]) jiraService.handler(2)).length;

@@ -85,6 +85,7 @@ public class ApplicationIntegrationTests {
 
     @Test
     public void testFetchingJenkinsData(){
+
         PrimaryView[] jobs = new PrimaryView[]{
                 new PrimaryView()
         };

@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.jira.Issue;
 import com.orange.malimacollector.entities.jira.Project;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.client.support.BasicAuthenticationInterceptor;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 
 @Service
 public class JiraService {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private MachineConfiguration config;
 
@@ -120,7 +124,7 @@ public class JiraService {
                 }
                 return issues;
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Jira Issues Error:" + e.getMessage());
                 return null;
             }
         } else if (choice == 2) {
@@ -129,7 +133,7 @@ public class JiraService {
             try {
                 return projectFromJsonString(content);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Jira Project Error" + e.getMessage());
                 return null;
             }
         } else {

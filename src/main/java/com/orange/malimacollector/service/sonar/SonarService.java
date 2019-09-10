@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.sonar.Issue;
 import com.orange.malimacollector.entities.sonar.Project;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import java.io.IOException;
 
 @Service
 public class SonarService {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private MachineConfiguration config;
 
@@ -102,7 +106,7 @@ public class SonarService {
             try {
                 return issueFromJsonString(content);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Sonar Issues Error:" + e.getMessage());
                 return null;
             }
         } else {
@@ -111,7 +115,7 @@ public class SonarService {
             try {
                 return projectFromJsonString(content);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Sonar Project Error:" + e.getMessage());
                 return null;
             }
         }

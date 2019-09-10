@@ -2,7 +2,7 @@ package com.orange.malimacollector.controller;
 
 import com.orange.malimacollector.entities.sonar.Issue;
 import com.orange.malimacollector.entities.sonar.Project;
-import com.orange.malimacollector.service.Sonar.SonarService;
+import com.orange.malimacollector.service.sonar.SonarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

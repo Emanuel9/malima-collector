@@ -2,7 +2,7 @@ package com.orange.malimacollector.controller;
 
 import com.orange.malimacollector.entities.mattermost.Teams;
 import com.orange.malimacollector.entities.mattermost.User;
-import com.orange.malimacollector.service.Mattermost.MattermostService;
+import com.orange.malimacollector.service.mattermost.MattermostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

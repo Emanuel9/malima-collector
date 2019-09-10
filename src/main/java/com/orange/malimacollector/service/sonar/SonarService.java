@@ -1,4 +1,4 @@
-package com.orange.malimacollector.service.Sonar;
+package com.orange.malimacollector.service.sonar;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

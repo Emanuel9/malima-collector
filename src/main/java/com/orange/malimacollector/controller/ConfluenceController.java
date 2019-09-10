@@ -1,7 +1,7 @@
 package com.orange.malimacollector.controller;
 
 import com.orange.malimacollector.entities.confluence.Page;
-import com.orange.malimacollector.service.Confluence.ConfluenceService;
+import com.orange.malimacollector.service.confluence.ConfluenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

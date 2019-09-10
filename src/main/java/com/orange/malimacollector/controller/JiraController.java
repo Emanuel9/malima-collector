@@ -2,7 +2,7 @@ package com.orange.malimacollector.controller;
 
 import com.orange.malimacollector.entities.jira.Issue;
 import com.orange.malimacollector.entities.jira.Project;
-import com.orange.malimacollector.service.Jira.JiraService;
+import com.orange.malimacollector.service.jira.JiraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

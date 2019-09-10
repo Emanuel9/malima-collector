@@ -1,4 +1,4 @@
-package com.orange.malimacollector.service.Mattermost;
+package com.orange.malimacollector.service.mattermost;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -11,6 +11,8 @@ import com.orange.malimacollector.entities.mattermost.Channel;
 import com.orange.malimacollector.entities.mattermost.PostList;
 import com.orange.malimacollector.entities.mattermost.Teams;
 import com.orange.malimacollector.entities.mattermost.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ import java.util.Map;
 
 @Service
 public class MattermostService {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private MachineConfiguration config;
 
@@ -170,7 +174,7 @@ public class MattermostService {
                 try {
                     return userFromJsonString(content);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Mattermost User Error:" + e.getMessage());
                     return null;
                 }
             case 2:
@@ -179,7 +183,7 @@ public class MattermostService {
                 try {
                     return teamsFromJsonString(content);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Mattermost Team Error:" + e.getMessage());
                     return null;
                 }
             default:
@@ -193,7 +197,7 @@ public class MattermostService {
         try {
             return channelFromJsonString(content);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Mattermost Channel Error:" + e.getMessage());
             return null;
         }
     }
@@ -204,7 +208,7 @@ public class MattermostService {
         try {
             return postFromJsonString(content);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Mattermost Posts Error:" + e.getMessage());
             return null;
         }
     }

@@ -1,4 +1,4 @@
-package com.orange.malimacollector.service.Jira;
+package com.orange.malimacollector.service.jira;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

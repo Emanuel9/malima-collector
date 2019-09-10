@@ -1,4 +1,4 @@
-package com.orange.malimacollector.service.Gitlab;
+package com.orange.malimacollector.service.gitlab;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +8,8 @@ import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.gitlab.GitLabParameters;
 import com.orange.malimacollector.entities.gitlab.Group;
 import com.orange.malimacollector.entities.gitlab.Project;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import java.io.IOException;
 
 @Service
 public class GitlabService {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private MachineConfiguration config;
 
@@ -114,7 +118,7 @@ public class GitlabService {
             try {
                 return projectFromJsonString(content);
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("Gitlab Service: " + e.getMessage());
                 return null;
             }
     }

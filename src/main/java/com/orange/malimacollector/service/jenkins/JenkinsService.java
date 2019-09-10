@@ -1,4 +1,4 @@
-package com.orange.malimacollector.service.Jenkins;
+package com.orange.malimacollector.service.jenkins;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.jenkins.JenkinsInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.io.IOException;
 
 @Service
 public class JenkinsService {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private MachineConfiguration config;
 
@@ -71,21 +75,13 @@ public class JenkinsService {
     public Object handler(int choice){
         String URL;
         String content;
-        switch (choice){
-            case 1:
-                URL = buildURL(1);
-                content = getData(URL);
-                try {
-                    return fromJsonString(content);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            case 2:
-                URL = buildURL(2);
-                content = getData(URL);
-                return null; //change to what other requirements there are
-            default:
-                return null;
+        URL = buildURL(1);
+        content = getData(URL);
+        try {
+            return fromJsonString(content);
+        } catch (IOException e) {
+            LOGGER.error("Jenkins Service:" + e.getMessage());
+            return null;
         }
     }
 }

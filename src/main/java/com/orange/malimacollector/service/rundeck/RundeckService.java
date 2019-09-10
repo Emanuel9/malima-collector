@@ -1,4 +1,4 @@
-package com.orange.malimacollector.service.Rundeck;
+package com.orange.malimacollector.service.rundeck;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.rundeck.Job;
 import com.orange.malimacollector.entities.rundeck.Project;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.ArrayList;
 
 @Service
 public class RundeckService {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private MachineConfiguration config;
 
@@ -107,7 +111,7 @@ public class RundeckService {
                 try {
                     return projectFromJsonString(content);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Rundeck Project Error:" + e.getMessage());
                 }
             case 2:
                 URL = buildURL(2);
@@ -119,7 +123,7 @@ public class RundeckService {
                     try {
                         jobCollection.add(jobFromJsonString(content));
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        LOGGER.error("Rundeck Job Error:" + e.getMessage());
                     }
                 }
                 return jobCollection;

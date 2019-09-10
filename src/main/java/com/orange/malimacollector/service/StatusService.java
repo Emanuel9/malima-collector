@@ -3,6 +3,8 @@ package com.orange.malimacollector.service;
 import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.Status;
 import com.orange.malimacollector.repositories.StatusRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.client.support.BasicAuthenticationInterceptor;
@@ -12,6 +14,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class StatusService {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private StatusRepository statusRepository;
 
@@ -23,6 +27,7 @@ public class StatusService {
         try {
             status.setRunning(getData(status) == 200 ? "true" : "false");
         } catch (Exception e) {
+            LOGGER.error("Status Error:" + e.getMessage());
             status.setRunning("false");
         }
 

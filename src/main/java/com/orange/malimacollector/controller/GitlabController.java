@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class GitlabController {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private GitlabService gitlabService;
@@ -23,7 +23,7 @@ public class GitlabController {
             Project[] projects = gitlabService.handler();
             model.addAttribute("projects", projects);
         } catch (Exception e){
-            LOGGER.error("Gitlab Controller:" + e.getMessage());
+            logger.error("Gitlab Controller:" + e.getMessage());
         }
         return "project";
     }

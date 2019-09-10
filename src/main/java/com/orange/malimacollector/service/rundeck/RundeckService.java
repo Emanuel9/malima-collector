@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 @Service
 public class RundeckService {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private MachineConfiguration config;
@@ -111,7 +111,7 @@ public class RundeckService {
                 try {
                     return projectFromJsonString(content);
                 } catch (IOException e) {
-                    LOGGER.error("Rundeck Project Error:" + e.getMessage());
+                    logger.error("Rundeck Project Error:" + e.getMessage());
                 }
             case 2:
                 URL = buildURL(2);
@@ -123,7 +123,7 @@ public class RundeckService {
                     try {
                         jobCollection.add(jobFromJsonString(content));
                     } catch (IOException e) {
-                        LOGGER.error("Rundeck Job Error:" + e.getMessage());
+                        logger.error("Rundeck Job Error:" + e.getMessage());
                     }
                 }
                 return jobCollection;

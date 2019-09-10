@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @Service
 public class JenkinsService {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private MachineConfiguration config;
@@ -80,7 +80,7 @@ public class JenkinsService {
         try {
             return fromJsonString(content);
         } catch (IOException e) {
-            LOGGER.error("Jenkins Service:" + e.getMessage());
+            logger.error("Jenkins Service:" + e.getMessage());
             return null;
         }
     }

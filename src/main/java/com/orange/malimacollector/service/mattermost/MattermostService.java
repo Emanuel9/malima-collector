@@ -24,7 +24,7 @@ import java.util.Map;
 
 @Service
 public class MattermostService {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private MachineConfiguration config;
@@ -174,7 +174,7 @@ public class MattermostService {
                 try {
                     return userFromJsonString(content);
                 } catch (IOException e) {
-                    LOGGER.error("Mattermost User Error:" + e.getMessage());
+                    logger.error("Mattermost User Error:" + e.getMessage());
                     return null;
                 }
             case 2:
@@ -183,7 +183,7 @@ public class MattermostService {
                 try {
                     return teamsFromJsonString(content);
                 } catch (IOException e) {
-                    LOGGER.error("Mattermost Team Error:" + e.getMessage());
+                    logger.error("Mattermost Team Error:" + e.getMessage());
                     return null;
                 }
             default:
@@ -197,7 +197,7 @@ public class MattermostService {
         try {
             return channelFromJsonString(content);
         } catch (IOException e) {
-            LOGGER.error("Mattermost Channel Error:" + e.getMessage());
+            logger.error("Mattermost Channel Error:" + e.getMessage());
             return null;
         }
     }
@@ -208,7 +208,7 @@ public class MattermostService {
         try {
             return postFromJsonString(content);
         } catch (IOException e) {
-            LOGGER.error("Mattermost Posts Error:" + e.getMessage());
+            logger.error("Mattermost Posts Error:" + e.getMessage());
             return null;
         }
     }

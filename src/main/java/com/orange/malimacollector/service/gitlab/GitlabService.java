@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @Service
 public class GitlabService {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private MachineConfiguration config;
@@ -118,7 +118,7 @@ public class GitlabService {
             try {
                 return projectFromJsonString(content);
             } catch (IOException e) {
-                LOGGER.error("Gitlab Service: " + e.getMessage());
+                logger.error("Gitlab Service: " + e.getMessage());
                 return null;
             }
     }

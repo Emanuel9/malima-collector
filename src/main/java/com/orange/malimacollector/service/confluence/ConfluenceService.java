@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @Service
 public class ConfluenceService {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private MachineConfiguration config;
@@ -80,7 +80,7 @@ public class ConfluenceService {
         try {
             return pageFromJsonString(content);
         } catch (IOException e) {
-            LOGGER.error("Confluence Service: " + e.getMessage());
+            logger.error("Confluence Service: " + e.getMessage());
         }
         return null;
     }

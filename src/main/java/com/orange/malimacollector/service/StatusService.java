@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class StatusService {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private StatusRepository statusRepository;
@@ -27,7 +27,7 @@ public class StatusService {
         try {
             status.setRunning(getData(status) == 200 ? "true" : "false");
         } catch (Exception e) {
-            LOGGER.error("Status Error:" + e.getMessage());
+            logger.error("Status Error:" + e.getMessage());
             status.setRunning("false");
         }
 

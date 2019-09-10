@@ -2,7 +2,6 @@ package com.orange.malimacollector.service.mattermost;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -93,39 +92,31 @@ public class MattermostService {
     }
 
     private static ObjectReader userReader;
-    private static ObjectWriter userWriter;
 
     private static ObjectReader teamReader;
-    private static ObjectWriter teamWriter;
 
     private static ObjectReader channelReader;
-    private static ObjectWriter channelWriter;
 
     private static ObjectReader postReader;
-    private static ObjectWriter postWriter;
 
     private static void instantiateUserMapper() {
         ObjectMapper mapper = new ObjectMapper();
         userReader = mapper.reader(User.class);
-        userWriter = mapper.writerFor(User.class);
     }
 
     private static void instantiateTeamsMapper() {
         ObjectMapper mapper = new ObjectMapper();
         teamReader = mapper.reader(Teams[].class);
-        teamWriter = mapper.writerFor(Teams[].class);
     }
 
     private static void instantiateChannelMapper() {
         ObjectMapper mapper = new ObjectMapper();
         channelReader = mapper.reader(Channel[].class);
-        channelWriter = mapper.writerFor(Channel[].class);
     }
 
     private static void instantiatePostMapper() {
         ObjectMapper mapper = new ObjectMapper();
         postReader = mapper.reader(PostList.class);
-        postWriter = mapper.writerFor(PostList.class);
     }
 
     private static ObjectReader getUserObjectReader() {

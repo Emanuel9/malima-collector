@@ -1,6 +1,6 @@
 package com.orange.malimacollector.controller;
 
-import com.orange.malimacollector.entities.GitlabEntities.Project;
+import com.orange.malimacollector.entities.gitlab.Project;
 import com.orange.malimacollector.service.Gitlab.GitlabService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

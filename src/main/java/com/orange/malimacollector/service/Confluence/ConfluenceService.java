@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.orange.malimacollector.config.MachineConfiguration;
-import com.orange.malimacollector.entities.ConfluenceEntities.Page;
+import com.orange.malimacollector.entities.confluence.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;

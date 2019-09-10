@@ -1,7 +1,7 @@
 package com.orange.malimacollector.dao;
 
-import com.orange.malimacollector.entities.LoginEntities.AppRole;
-import com.orange.malimacollector.entities.LoginEntities.AppUser;
+import com.orange.malimacollector.entities.login.AppRole;
+import com.orange.malimacollector.entities.login.AppUser;
 import com.orange.malimacollector.model.AppUserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

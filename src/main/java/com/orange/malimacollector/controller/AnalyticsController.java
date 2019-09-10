@@ -1,11 +1,11 @@
 package com.orange.malimacollector.controller;
 
-import com.orange.malimacollector.entities.ConfluenceEntities.Page;
-import com.orange.malimacollector.entities.JenkinsEntities.JenkinsInfo;
-import com.orange.malimacollector.entities.JiraEntities.Issue;
-import com.orange.malimacollector.entities.JiraEntities.Project;
-import com.orange.malimacollector.entities.MattermostEntities.Teams;
-import com.orange.malimacollector.entities.RundeckEntities.Job;
+import com.orange.malimacollector.entities.confluence.Page;
+import com.orange.malimacollector.entities.jenkins.JenkinsInfo;
+import com.orange.malimacollector.entities.jira.Issue;
+import com.orange.malimacollector.entities.jira.Project;
+import com.orange.malimacollector.entities.mattermost.Teams;
+import com.orange.malimacollector.entities.rundeck.Job;
 import com.orange.malimacollector.service.Confluence.ConfluenceService;
 import com.orange.malimacollector.service.Gitlab.GitlabService;
 import com.orange.malimacollector.service.Jenkins.JenkinsService;
@@ -68,7 +68,7 @@ public class AnalyticsController {
         int mattermostPosts = posts.size();
         model.addAttribute("mattermostPosts", mattermostPosts);
 
-        int rundeckProjects = ((com.orange.malimacollector.entities.RundeckEntities.Project[]) rundeckService.handler(1)).length;
+        int rundeckProjects = ((com.orange.malimacollector.entities.rundeck.Project[]) rundeckService.handler(1)).length;
         model.addAttribute("rundeckProjects", rundeckProjects);
         ArrayList<Job[]> jobCollection = (ArrayList<Job[]>) rundeckService.handler(2);
         int size = 0;
@@ -77,9 +77,9 @@ public class AnalyticsController {
         }
         model.addAttribute("rundeckJobs", size);
 
-        int sonarProjects = ((com.orange.malimacollector.entities.SonarEntities.Project) sonarService.handler(2)).getComponents().length;
+        int sonarProjects = ((com.orange.malimacollector.entities.sonar.Project) sonarService.handler(2)).getComponents().length;
         model.addAttribute("sonarProjects", sonarProjects);
-        int sonarIssues = ((com.orange.malimacollector.entities.SonarEntities.Issue) sonarService.handler(1)).getIssues().length;
+        int sonarIssues = ((com.orange.malimacollector.entities.sonar.Issue) sonarService.handler(1)).getIssues().length;
         model.addAttribute("sonarIssues", sonarIssues);
         return "analytics";
     }

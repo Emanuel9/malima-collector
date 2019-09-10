@@ -1,7 +1,7 @@
 package com.orange.malimacollector.controller;
 
-import com.orange.malimacollector.entities.RundeckEntities.Job;
-import com.orange.malimacollector.entities.RundeckEntities.Project;
+import com.orange.malimacollector.entities.rundeck.Job;
+import com.orange.malimacollector.entities.rundeck.Project;
 import com.orange.malimacollector.service.Rundeck.RundeckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

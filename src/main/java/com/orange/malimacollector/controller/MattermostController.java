@@ -1,7 +1,7 @@
 package com.orange.malimacollector.controller;
 
-import com.orange.malimacollector.entities.MattermostEntities.Teams;
-import com.orange.malimacollector.entities.MattermostEntities.User;
+import com.orange.malimacollector.entities.mattermost.Teams;
+import com.orange.malimacollector.entities.mattermost.User;
 import com.orange.malimacollector.service.Mattermost.MattermostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

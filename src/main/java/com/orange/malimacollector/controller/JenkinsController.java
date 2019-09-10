@@ -1,7 +1,7 @@
 package com.orange.malimacollector.controller;
 
-import com.orange.malimacollector.entities.JenkinsEntities.JenkinsInfo;
-import com.orange.malimacollector.entities.JenkinsEntities.PrimaryView;
+import com.orange.malimacollector.entities.jenkins.JenkinsInfo;
+import com.orange.malimacollector.entities.jenkins.PrimaryView;
 import com.orange.malimacollector.service.Jenkins.JenkinsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

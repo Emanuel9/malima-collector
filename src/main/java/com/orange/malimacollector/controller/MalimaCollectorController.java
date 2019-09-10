@@ -1,7 +1,7 @@
 package com.orange.malimacollector.controller;
 
 import com.orange.malimacollector.dao.AppUserDAO;
-import com.orange.malimacollector.entities.LoginEntities.AppUser;
+import com.orange.malimacollector.entities.login.AppUser;
 import com.orange.malimacollector.model.AppUserForm;
 import com.orange.malimacollector.utils.WebUtils;
 import com.orange.malimacollector.validator.AppUserValidator;

@@ -1,7 +1,7 @@
 package com.orange.malimacollector.service;
 
 import com.orange.malimacollector.dao.AppUserDAO;
-import com.orange.malimacollector.entities.LoginEntities.AppUser;
+import com.orange.malimacollector.entities.login.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

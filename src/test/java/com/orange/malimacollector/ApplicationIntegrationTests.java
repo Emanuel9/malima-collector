@@ -1,15 +1,15 @@
 package com.orange.malimacollector;
 
-import com.orange.malimacollector.entities.ConfluenceEntities.Page;
-import com.orange.malimacollector.entities.ConfluenceEntities.Result;
-import com.orange.malimacollector.entities.GitlabEntities.Project;
-import com.orange.malimacollector.entities.JenkinsEntities.JenkinsInfo;
-import com.orange.malimacollector.entities.JenkinsEntities.PrimaryView;
-import com.orange.malimacollector.entities.JiraEntities.Issue;
-import com.orange.malimacollector.entities.MattermostEntities.Teams;
-import com.orange.malimacollector.entities.MattermostEntities.User;
-import com.orange.malimacollector.entities.SonarEntities.Component;
-import com.orange.malimacollector.entities.SonarEntities.IssueElement;
+import com.orange.malimacollector.entities.confluence.Page;
+import com.orange.malimacollector.entities.confluence.Result;
+import com.orange.malimacollector.entities.gitlab.Project;
+import com.orange.malimacollector.entities.jenkins.JenkinsInfo;
+import com.orange.malimacollector.entities.jenkins.PrimaryView;
+import com.orange.malimacollector.entities.jira.Issue;
+import com.orange.malimacollector.entities.mattermost.Teams;
+import com.orange.malimacollector.entities.mattermost.User;
+import com.orange.malimacollector.entities.sonar.Component;
+import com.orange.malimacollector.entities.sonar.IssueElement;
 import com.orange.malimacollector.service.Confluence.ConfluenceService;
 import com.orange.malimacollector.service.Gitlab.GitlabService;
 import com.orange.malimacollector.service.Jenkins.JenkinsService;
@@ -96,15 +96,15 @@ public class ApplicationIntegrationTests {
 
     @Test
     public void testFetchingJiraData(){
-        com.orange.malimacollector.entities.JiraEntities.Project[] projects = new com.orange.malimacollector.entities.JiraEntities.Project[]{
-          new com.orange.malimacollector.entities.JiraEntities.Project()
+        com.orange.malimacollector.entities.jira.Project[] projects = new com.orange.malimacollector.entities.jira.Project[]{
+          new com.orange.malimacollector.entities.jira.Project()
         };
         ArrayList<Issue> issueColl = new ArrayList<>();
-        ArrayList<com.orange.malimacollector.entities.JiraEntities.IssueElement> issues = new ArrayList<>();
+        ArrayList<com.orange.malimacollector.entities.jira.IssueElement> issues = new ArrayList<>();
         for (int i = 0; i < 23; i++){
-            issues.add(new com.orange.malimacollector.entities.JiraEntities.IssueElement());
+            issues.add(new com.orange.malimacollector.entities.jira.IssueElement());
         }
-        com.orange.malimacollector.entities.JiraEntities.IssueElement[] issueElements = new com.orange.malimacollector.entities.JiraEntities.IssueElement[issues.size()];
+        com.orange.malimacollector.entities.jira.IssueElement[] issueElements = new com.orange.malimacollector.entities.jira.IssueElement[issues.size()];
         issueElements = issues.toArray(issueElements);
         Issue issue = new Issue();
         issue.setIssues(issueElements);
@@ -112,7 +112,7 @@ public class ApplicationIntegrationTests {
         given(jiraServiceMock.handler(2)).willReturn(projects);
         given(jiraServiceMock.handler(1)).willReturn(issueColl);
         assertEquals(projects.length,
-                ((com.orange.malimacollector.entities.JiraEntities.Project[])jiraServiceMock.handler(2)).length);
+                ((com.orange.malimacollector.entities.jira.Project[])jiraServiceMock.handler(2)).length);
         assertEquals(23, ((ArrayList<Issue>)jiraServiceMock.handler(1)).get(0).getIssues().length);
     }
 
@@ -131,23 +131,23 @@ public class ApplicationIntegrationTests {
 
     @Test
     public void testFetchingRundeckData(){
-        com.orange.malimacollector.entities.RundeckEntities.Project[] projects = new com.orange.malimacollector.entities.RundeckEntities.Project[]{
-                new com.orange.malimacollector.entities.RundeckEntities.Project()
+        com.orange.malimacollector.entities.rundeck.Project[] projects = new com.orange.malimacollector.entities.rundeck.Project[]{
+                new com.orange.malimacollector.entities.rundeck.Project()
         };
         given(rundeckServiceMock.handler(1)).willReturn(projects);
         assertEquals(projects.length,
-                ((com.orange.malimacollector.entities.RundeckEntities.Project[])rundeckServiceMock.handler(1)).length);
+                ((com.orange.malimacollector.entities.rundeck.Project[])rundeckServiceMock.handler(1)).length);
     }
 
     @Test
     public void testFetchingSonarData(){
-        com.orange.malimacollector.entities.SonarEntities.Project project = new com.orange.malimacollector.entities.SonarEntities.Project();
+        com.orange.malimacollector.entities.sonar.Project project = new com.orange.malimacollector.entities.sonar.Project();
         Component[] components = new Component[]{
           new Component(), new Component()
         };
         project.setComponents(components);
         given(sonarServiceMock.handler(2)).willReturn(project);
-        com.orange.malimacollector.entities.SonarEntities.Issue issue = new com.orange.malimacollector.entities.SonarEntities.Issue();
+        com.orange.malimacollector.entities.sonar.Issue issue = new com.orange.malimacollector.entities.sonar.Issue();
         ArrayList<IssueElement> issues = new ArrayList<>();
         for (int i = 0; i < 100; i++){
             issues.add(new IssueElement());
@@ -156,7 +156,7 @@ public class ApplicationIntegrationTests {
         issueElements = issues.toArray(issueElements);
         issue.setIssues(issueElements);
         given(sonarServiceMock.handler(1)).willReturn(issue);
-        assertEquals(2, ((com.orange.malimacollector.entities.SonarEntities.Project)sonarServiceMock.handler(2)).getComponents().length);
-        assertEquals(100, ((com.orange.malimacollector.entities.SonarEntities.Issue)sonarServiceMock.handler(1)).getIssues().length);
+        assertEquals(2, ((com.orange.malimacollector.entities.sonar.Project)sonarServiceMock.handler(2)).getComponents().length);
+        assertEquals(100, ((com.orange.malimacollector.entities.sonar.Issue)sonarServiceMock.handler(1)).getIssues().length);
     }
 }

@@ -1,6 +1,6 @@
 package com.orange.malimacollector.dao;
 
-import com.orange.malimacollector.entities.LoginEntities.AppUser;
+import com.orange.malimacollector.entities.login.AppUser;
 import com.orange.malimacollector.model.AppUserForm;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

@@ -1,7 +1,7 @@
 package com.orange.malimacollector.validator;
 
 import com.orange.malimacollector.dao.AppUserDAO;
-import com.orange.malimacollector.entities.LoginEntities.AppUser;
+import com.orange.malimacollector.entities.login.AppUser;
 import com.orange.malimacollector.model.AppUserForm;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;

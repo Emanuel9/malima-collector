@@ -1,10 +1,10 @@
-package com.orange.malimacollector.service.jenkins;
+package com.orange.malimacollector.service;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JenkinsServiceTest {
+class JiraServiceTest {
 
     @Test
     void buildURL() {
@@ -12,6 +12,10 @@ class JenkinsServiceTest {
 
     @Test
     void getData() {
+    }
+
+    @Test
+    void testGetData() {
     }
 
     @Test

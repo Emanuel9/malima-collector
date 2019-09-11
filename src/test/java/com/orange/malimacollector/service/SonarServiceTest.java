@@ -1,4 +1,4 @@
-package com.orange.malimacollector.service.sonar;
+package com.orange.malimacollector.service;
 
 import org.junit.jupiter.api.Test;
 

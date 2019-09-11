@@ -1,10 +1,10 @@
-package com.orange.malimacollector.service.confluence;
+package com.orange.malimacollector.service;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ConfluenceServiceTest {
+class RundeckServiceTest {
 
     @Test
     void buildURL() {

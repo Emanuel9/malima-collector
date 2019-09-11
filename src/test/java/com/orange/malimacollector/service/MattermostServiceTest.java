@@ -1,10 +1,10 @@
-package com.orange.malimacollector.service.jira;
+package com.orange.malimacollector.service;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JiraServiceTest {
+class MattermostServiceTest {
 
     @Test
     void buildURL() {
@@ -20,5 +20,17 @@ class JiraServiceTest {
 
     @Test
     void handler() {
+    }
+
+    @Test
+    void testHandler() {
+    }
+
+    @Test
+    void testHandler1() {
+    }
+
+    @Test
+    void testHandler2() {
     }
 }

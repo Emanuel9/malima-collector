@@ -24,7 +24,7 @@ class AppUserDAOTest {
 
     @Test
     void getMaxUserIdTest() {
-        Long maxUser = 1L;
+        Long maxUser = 2L;
         assertEquals(maxUser, appUserDAO.getMaxUserId());
     }
 

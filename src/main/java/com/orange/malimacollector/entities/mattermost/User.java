@@ -2,13 +2,10 @@ package com.orange.malimacollector.entities.mattermost;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.orange.malimacollector.entities.CommonFields;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
-    private String id;
-    private long createAt;
-    private long updateAt;
-    private long deleteAt;
+public class User extends CommonFields {
     private String username;
     private String firstName;
     private String lastName;
@@ -27,26 +24,6 @@ public class User {
     private Timezone timezone;
     private String termsOfServiceID;
     private long termsOfServiceCreateAt;
-
-    @JsonProperty("id")
-    public String getID() { return id; }
-    @JsonProperty("id")
-    public void setID(String value) { this.id = value; }
-
-    @JsonProperty("create_at")
-    public long getCreateAt() { return createAt; }
-    @JsonProperty("create_at")
-    public void setCreateAt(long value) { this.createAt = value; }
-
-    @JsonProperty("update_at")
-    public long getUpdateAt() { return updateAt; }
-    @JsonProperty("update_at")
-    public void setUpdateAt(long value) { this.updateAt = value; }
-
-    @JsonProperty("delete_at")
-    public long getDeleteAt() { return deleteAt; }
-    @JsonProperty("delete_at")
-    public void setDeleteAt(long value) { this.deleteAt = value; }
 
     @JsonProperty("username")
     public String getUsername() { return username; }

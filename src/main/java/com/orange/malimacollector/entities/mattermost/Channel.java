@@ -1,43 +1,18 @@
 package com.orange.malimacollector.entities.mattermost;
 
 import com.fasterxml.jackson.annotation.*;
+import com.orange.malimacollector.entities.CommonFields;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Channel {
-    private String id;
-    private long createAt;
-    private long updateAt;
-    private long deleteAt;
+public class Channel extends CommonFields {
     private String teamID;
     private String type;
-    private String displayName;
-    private String name;
     private String header;
     private String purpose;
     private long lastPostAt;
     private long totalMsgCount;
     private long extraUpdateAt;
     private String creatorID;
-
-    @JsonProperty("id")
-    public String getID() { return id; }
-    @JsonProperty("id")
-    public void setID(String value) { this.id = value; }
-
-    @JsonProperty("create_at")
-    public long getCreateAt() { return createAt; }
-    @JsonProperty("create_at")
-    public void setCreateAt(long value) { this.createAt = value; }
-
-    @JsonProperty("update_at")
-    public long getUpdateAt() { return updateAt; }
-    @JsonProperty("update_at")
-    public void setUpdateAt(long value) { this.updateAt = value; }
-
-    @JsonProperty("delete_at")
-    public long getDeleteAt() { return deleteAt; }
-    @JsonProperty("delete_at")
-    public void setDeleteAt(long value) { this.deleteAt = value; }
 
     @JsonProperty("team_id")
     public String getTeamID() { return teamID; }
@@ -48,16 +23,6 @@ public class Channel {
     public String getType() { return type; }
     @JsonProperty("type")
     public void setType(String value) { this.type = value; }
-
-    @JsonProperty("display_name")
-    public String getDisplayName() { return displayName; }
-    @JsonProperty("display_name")
-    public void setDisplayName(String value) { this.displayName = value; }
-
-    @JsonProperty("name")
-    public String getName() { return name; }
-    @JsonProperty("name")
-    public void setName(String value) { this.name = value; }
 
     @JsonProperty("header")
     public String getHeader() { return header; }

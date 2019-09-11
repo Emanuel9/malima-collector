@@ -2,29 +2,17 @@ package com.orange.malimacollector.entities.rundeck;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.orange.malimacollector.entities.CommonFields;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Job {
-    private String id;
-    private String name;
+public class Job extends CommonFields {
     private String group;
     private String project;
-    private String description;
     private String href;
     private String permalink;
     private boolean scheduled;
     private boolean scheduleEnabled;
     private boolean enabled;
-
-    @JsonProperty("id")
-    public String getID() { return id; }
-    @JsonProperty("id")
-    public void setID(String value) { this.id = value; }
-
-    @JsonProperty("name")
-    public String getName() { return name; }
-    @JsonProperty("name")
-    public void setName(String value) { this.name = value; }
 
     @JsonProperty("group")
     public String getGroup() { return group; }
@@ -35,11 +23,6 @@ public class Job {
     public String getProject() { return project; }
     @JsonProperty("project")
     public void setProject(String value) { this.project = value; }
-
-    @JsonProperty("description")
-    public String getDescription() { return description; }
-    @JsonProperty("description")
-    public void setDescription(String value) { this.description = value; }
 
     @JsonProperty("href")
     public String getHref() { return href; }

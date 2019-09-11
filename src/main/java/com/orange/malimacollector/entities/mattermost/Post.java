@@ -1,18 +1,13 @@
 package com.orange.malimacollector.entities.mattermost;
 
 import com.fasterxml.jackson.annotation.*;
+import com.orange.malimacollector.entities.CommonFields;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Post {
-    private String id;
-    private long createAt;
-    private long updateAt;
-    private long deleteAt;
+public class Post extends CommonFields {
     private long editAt;
-    private String userID;
     private String channelID;
     private String rootID;
-    private String parentID;
     private String originalID;
     private String message;
     private String type;
@@ -23,35 +18,10 @@ public class Post {
     private String pendingPostID;
     private Metadata metadata;
 
-    @JsonProperty("id")
-    public String getID() { return id; }
-    @JsonProperty("id")
-    public void setID(String value) { this.id = value; }
-
-    @JsonProperty("create_at")
-    public long getCreateAt() { return createAt; }
-    @JsonProperty("create_at")
-    public void setCreateAt(long value) { this.createAt = value; }
-
-    @JsonProperty("update_at")
-    public long getUpdateAt() { return updateAt; }
-    @JsonProperty("update_at")
-    public void setUpdateAt(long value) { this.updateAt = value; }
-
-    @JsonProperty("delete_at")
-    public long getDeleteAt() { return deleteAt; }
-    @JsonProperty("delete_at")
-    public void setDeleteAt(long value) { this.deleteAt = value; }
-
     @JsonProperty("edit_at")
     public long getEditAt() { return editAt; }
     @JsonProperty("edit_at")
     public void setEditAt(long value) { this.editAt = value; }
-
-    @JsonProperty("user_id")
-    public String getUserID() { return userID; }
-    @JsonProperty("user_id")
-    public void setUserID(String value) { this.userID = value; }
 
     @JsonProperty("channel_id")
     public String getChannelID() { return channelID; }
@@ -62,11 +32,6 @@ public class Post {
     public String getRootID() { return rootID; }
     @JsonProperty("root_id")
     public void setRootID(String value) { this.rootID = value; }
-
-    @JsonProperty("parent_id")
-    public String getParentID() { return parentID; }
-    @JsonProperty("parent_id")
-    public void setParentID(String value) { this.parentID = value; }
 
     @JsonProperty("original_id")
     public String getOriginalID() { return originalID; }

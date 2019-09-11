@@ -2,13 +2,11 @@ package com.orange.malimacollector.entities.sonar;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.orange.malimacollector.entities.CommonFields;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Component {
+public class Component extends CommonFields {
     private String organization;
-    private String id;
-    private String key;
-    private String name;
     private String qualifier;
     private String visibility;
     private String lastAnalysisDate;
@@ -18,21 +16,6 @@ public class Component {
     public String getOrganization() { return organization; }
     @JsonProperty("organization")
     public void setOrganization(String value) { this.organization = value; }
-
-    @JsonProperty("id")
-    public String getID() { return id; }
-    @JsonProperty("id")
-    public void setID(String value) { this.id = value; }
-
-    @JsonProperty("key")
-    public String getKey() { return key; }
-    @JsonProperty("key")
-    public void setKey(String value) { this.key = value; }
-
-    @JsonProperty("name")
-    public String getName() { return name; }
-    @JsonProperty("name")
-    public void setName(String value) { this.name = value; }
 
     @JsonProperty("qualifier")
     public String getQualifier() { return qualifier; }

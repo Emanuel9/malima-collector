@@ -2,13 +2,11 @@ package com.orange.malimacollector.entities.jira;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.orange.malimacollector.entities.CommonFields;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class IssueElement {
+public class IssueElement extends CommonFields {
     private String expand;
-    private String id;
-    private String key;
-    private String self;
     private Fields fields;
     private String transitions;
 
@@ -16,21 +14,6 @@ public class IssueElement {
     public String getExpand() { return expand; }
     @JsonProperty("expand")
     public void setExpand(String value) { this.expand = value; }
-
-    @JsonProperty("id")
-    public String getID() { return id; }
-    @JsonProperty("id")
-    public void setID(String value) { this.id = value; }
-
-    @JsonProperty("key")
-    public String getKey() { return key; }
-    @JsonProperty("key")
-    public void setKey(String value) { this.key = value; }
-
-    @JsonProperty("self")
-    public String getSelf() { return self; }
-    @JsonProperty("self")
-    public void setSelf(String value) { this.self = value; }
 
     @JsonProperty("transitions")
     public String getTransitions() { return transitions; }

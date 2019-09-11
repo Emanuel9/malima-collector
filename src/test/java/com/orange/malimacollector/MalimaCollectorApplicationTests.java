@@ -11,6 +11,7 @@ public class MalimaCollectorApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		MalimaCollectorApplication.main(new String[]{});
 	}
 
 }

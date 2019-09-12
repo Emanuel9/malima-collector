@@ -1,9 +1,7 @@
 package com.orange.malimacollector.service.jenkins;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.jenkins.JenkinsInfo;
 import org.slf4j.Logger;
@@ -42,27 +40,16 @@ public class JenkinsService {
         return getObjectReader().readValue(json);
     }
 
-    public static String toJsonString(JenkinsInfo obj) throws JsonProcessingException {
-        return getObjectWriter().writeValueAsString(obj);
-    }
-
     private static ObjectReader reader;
-    private static ObjectWriter writer;
 
     private static void instantiateMapper() {
         ObjectMapper mapper = new ObjectMapper();
         reader = mapper.reader(JenkinsInfo.class);
-        writer = mapper.writerFor(JenkinsInfo.class);
     }
 
     private static ObjectReader getObjectReader() {
         if (reader == null) instantiateMapper();
         return reader;
-    }
-
-    private static ObjectWriter getObjectWriter() {
-        if (writer == null) instantiateMapper();
-        return writer;
     }
 
     public Object handler(){

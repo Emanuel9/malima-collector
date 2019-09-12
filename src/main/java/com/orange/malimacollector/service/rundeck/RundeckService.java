@@ -1,9 +1,7 @@
 package com.orange.malimacollector.service.rundeck;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.rundeck.Job;
 import com.orange.malimacollector.entities.rundeck.Project;
@@ -47,34 +45,22 @@ public class RundeckService {
         return getProjectReader().readValue(json);
     }
 
-    public static String projectToJsonString(Project[] obj) throws JsonProcessingException {
-        return getProjectWriter().writeValueAsString(obj);
-    }
-
     public static Job[] jobFromJsonString(String json) throws IOException {
         return getJobReader().readValue(json);
     }
 
-    public static String jobToJsonString(Job[] obj) throws JsonProcessingException {
-        return getJobWriter().writeValueAsString(obj);
-    }
-
     private static ObjectReader projectReader;
-    private static ObjectWriter projectWriter;
 
     private static ObjectReader jobReader;
-    private static ObjectWriter jobWriter;
 
     private static void instantiateProjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         projectReader = mapper.reader(Project[].class);
-        projectWriter = mapper.writerFor(Project[].class);
     }
 
     private static void instantiateJobMapper() {
         ObjectMapper mapper = new ObjectMapper();
         jobReader = mapper.reader(Job[].class);
-        jobWriter = mapper.writerFor(Job[].class);
     }
 
     private static ObjectReader getProjectReader() {
@@ -82,19 +68,9 @@ public class RundeckService {
         return projectReader;
     }
 
-    private static ObjectWriter getProjectWriter() {
-        if (projectWriter == null) instantiateProjectMapper();
-        return projectWriter;
-    }
-
     private static ObjectReader getJobReader() {
         if (jobReader == null) instantiateJobMapper();
         return jobReader;
-    }
-
-    private static ObjectWriter getJobWriter() {
-        if (jobWriter == null) instantiateJobMapper();
-        return jobWriter;
     }
 
     public Object handler(int choice){

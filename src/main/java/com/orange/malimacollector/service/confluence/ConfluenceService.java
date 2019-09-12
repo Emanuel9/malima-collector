@@ -1,9 +1,7 @@
 package com.orange.malimacollector.service.confluence;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.orange.malimacollector.config.MachineConfiguration;
 import com.orange.malimacollector.entities.confluence.Page;
 import org.slf4j.Logger;
@@ -42,27 +40,16 @@ public class ConfluenceService {
         return getPageReader().readValue(json);
     }
 
-    public static String pageToJsonString(Page obj) throws JsonProcessingException {
-        return getPageWriter().writeValueAsString(obj);
-    }
-
     private static ObjectReader pageReader;
-    private static ObjectWriter pageWriter;
 
     private static void instantiatePageMapper() {
         ObjectMapper mapper = new ObjectMapper();
         pageReader = mapper.reader(Page.class);
-        pageWriter = mapper.writerFor(Page.class);
     }
 
     private static ObjectReader getPageReader() {
         if (pageReader == null) instantiatePageMapper();
         return pageReader;
-    }
-
-    private static ObjectWriter getPageWriter() {
-        if (pageWriter == null) instantiatePageMapper();
-        return pageWriter;
     }
 
     public Object handler(){

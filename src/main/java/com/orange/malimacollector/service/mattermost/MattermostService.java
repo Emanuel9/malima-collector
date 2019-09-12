@@ -134,7 +134,6 @@ public class MattermostService {
         return channelReader;
     }
 
-
     private static ObjectReader getPostObjectReader() {
         if (postReader == null) instantiatePostMapper();
         return postReader;

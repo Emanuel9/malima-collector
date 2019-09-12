@@ -38,6 +38,7 @@ class MalimaCollectorControllerTest {
     @Autowired
     private AppUserDAO appUserDAO;
 
+
     @Before
     public void setUp() throws Exception{
         MockitoAnnotations.initMocks(this);

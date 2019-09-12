@@ -53,25 +53,19 @@ public class MalimaCollectorController {
 
     @RequestMapping("/members")
     public String viewMembers(Model model) {
-
         List<AppUser> list = appUserDAO.getAppUsers();
-
         model.addAttribute("members", list);
-
         return "membersPage";
     }
 
     @RequestMapping("/registerSuccessful")
     public String viewRegisterSuccessful(Model model) {
-
         return "registerSuccessfulPage";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String viewRegister(Model model) {
-
         AppUserForm form = new AppUserForm();
-
         model.addAttribute("appUserForm", form);
 
         return REGISTER;

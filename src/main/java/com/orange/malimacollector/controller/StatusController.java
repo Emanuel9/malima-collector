@@ -1,7 +1,6 @@
 package com.orange.malimacollector.controller;
 
 import com.orange.malimacollector.config.MachineConfiguration;
-import com.orange.malimacollector.entities.Status;
 import com.orange.malimacollector.repositories.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class StatusController {
-    private static final String[] models = new String[]{
-      "confluence", "gitlab", "jenkins", "jira", "mattermost", "rundeck", "sonar"
-    };
     @Autowired
     StatusRepository statusRepository;
 
@@ -22,11 +18,26 @@ public class StatusController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/index")
     public String checkStatus(Model model){
-        for (int i = 0; i < 6; i++) {
-            Status status = statusRepository.findByWebsiteAddress(this.config.getWebsites()[i].getLocalAddress());
-            if (status != null){
-                model.addAttribute(models[i], status.isRunning());
-            }
+        if (statusRepository.findByWebsiteAddress(this.config.getWebsites()[0].getLocalAddress()) != null) {
+            model.addAttribute("confluence", statusRepository.findByWebsiteAddress(this.config.getWebsites()[0].getLocalAddress()).isRunning());
+        }
+        if(statusRepository.findByWebsiteAddress(this.config.getWebsites()[1].getLocalAddress()) != null) {
+            model.addAttribute("gitlab", statusRepository.findByWebsiteAddress(this.config.getWebsites()[1].getLocalAddress()).isRunning());
+        }
+        if (statusRepository.findByWebsiteAddress(this.config.getWebsites()[2].getLocalAddress()) != null) {
+            model.addAttribute("jenkins", statusRepository.findByWebsiteAddress(this.config.getWebsites()[2].getLocalAddress()).isRunning());
+        }
+        if (statusRepository.findByWebsiteAddress(this.config.getWebsites()[3].getLocalAddress()) != null) {
+            model.addAttribute("jira", statusRepository.findByWebsiteAddress(this.config.getWebsites()[3].getLocalAddress()).isRunning());
+        }
+        if (statusRepository.findByWebsiteAddress(this.config.getWebsites()[4].getLocalAddress()) != null) {
+            model.addAttribute("mattermost", statusRepository.findByWebsiteAddress(this.config.getWebsites()[4].getLocalAddress()).isRunning());
+        }
+        if(statusRepository.findByWebsiteAddress(this.config.getWebsites()[5].getLocalAddress()) != null) {
+            model.addAttribute("rundeck", statusRepository.findByWebsiteAddress(this.config.getWebsites()[5].getLocalAddress()).isRunning());
+        }
+        if(statusRepository.findByWebsiteAddress(this.config.getWebsites()[6].getLocalAddress()) != null) {
+            model.addAttribute("sonar", statusRepository.findByWebsiteAddress(this.config.getWebsites()[6].getLocalAddress()).isRunning());
         }
         return "index";
     }

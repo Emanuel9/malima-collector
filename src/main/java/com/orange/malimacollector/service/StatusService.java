@@ -27,8 +27,8 @@ public class StatusService {
         try {
             status.setRunning(getData(status) == 200 ? "true" : "false");
         } catch (Exception e) {
-            logger.error("Status Error:" + e.getMessage());
             status.setRunning("false");
+            logger.error("Status Error:" + e.getMessage());
         }
 
         if (statusOptional != null){

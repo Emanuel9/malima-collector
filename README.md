@@ -60,6 +60,14 @@ Status table:
 - service address
 - service status
 
+### Prerequisites
+In order to utilize all the features of the application, a user needs to have access to each of the services that the application
+displays information about. A local address needs to be provided in the **application.yml** file for each service. It is also
+necessary to provide an admin username and password for each service or a personal access token and user id where this option is
+the preferred one (Gitlab service and Mattermost service). As the application runs in a Java environment, there needs to be a JRE
+installed on the local machine (version 1.8 and above) and since it uses a MySQL database to store data it is required to have it
+installed as well (version 8 and above).
+
 ### Configuration
 application.yml
 

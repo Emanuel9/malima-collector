@@ -99,7 +99,7 @@
 		<dependency>
 			<groupId>org.rundeck</groupId>
 			<artifactId>rundeck-core</artifactId>
-			<version>3.0.16-20190223</version>
+			<version>3.3.14-20210827</version>
 		</dependency>
 		<dependency>
 			<groupId>org.sonarsource.sonarqube</groupId>
